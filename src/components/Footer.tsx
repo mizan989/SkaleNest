@@ -1,3 +1,4 @@
+import { Target } from "lucide-react";
 import Logo from "./Logo";
 
 const FOOTER_LINKS = {
@@ -13,10 +14,10 @@ const FOOTER_LINKS = {
     { label: "Contact", href: "#contact" },
   ],
   Connect: [
-    { label: "Instagram", href: "https://instagram.com/skalenest" },
-    { label: "LinkedIn", href: "https://linkedin.com/company/skalenest" },
-    // { label: "Facebook", href: "https://facebook.com/skalenest" },
-    { label: "WhatsApp", href: "https://wa.me/917439980010" },
+    { label: "Instagram", href: "https://instagram.com/skalenest", target: "_blank" },
+    { label: "LinkedIn", href: "https://linkedin.com/company/skalenest", target: "_blank" },
+    // { label: "Facebook", href: "https://facebook.com/skalenest", target: "_blank" },
+    { label: "WhatsApp", href: "https://wa.me/917439980010", target: "_blank" },
   ],
 };
 
