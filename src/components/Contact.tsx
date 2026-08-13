@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { ArrowUpRight, Mail, MessageCircle, Instagram, Linkedin } from "lucide-react";
+import { ArrowUpRight, Mail, MessageCircle, Instagram, Linkedin, Facebook } from "lucide-react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 
@@ -85,20 +85,27 @@ export default function Contact() {
                 @skalenest
               </a>
               {/* <a
+                href="google.com"
+                className="flex items-center gap-3 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
+                target="_blank"
+              >
+                <Facebook size={16} className="text-gold" />
+                Connect on facebook
+              </a> */}
+              <a
                 href="https://linkedin.com/company/skalenest"
                 className="flex items-center gap-3 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
                 target="_blank"
               >
                 <Linkedin size={16} className="text-gold" />
                 SkaleNest on LinkedIn
-              </a> */}
+              </a>
             </div>
           </Reveal>
 
           <Reveal delay={0.15}>
             {status === "success" ? (
-              <div className="flex h-full min-h-[400px] flex-col items-center justify-center rounded-2xl border border-gold/30 bg-card p-10 text-center">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 bg-gold/[0.08]">
+                <div className="flex h-full min-h-[700px] flex-col items-center justify-center rounded-2xl border border-gold/30 bg-card p-10 text-center">                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 bg-gold/[0.08]">
                   <ArrowUpRight size={22} className="text-gold" />
                 </div>
                 <h3 className="mt-6 font-display text-2xl font-semibold text-text-primary">

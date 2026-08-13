@@ -15,7 +15,8 @@ const FOOTER_LINKS = {
   Connect: [
     { label: "Instagram", href: "https://instagram.com/skalenest" },
     { label: "LinkedIn", href: "https://linkedin.com/company/skalenest" },
-    { label: "WhatsApp", href: "https://wa.me/00000000000" },
+    // { label: "Facebook", href: "https://facebook.com/skalenest" },
+    { label: "WhatsApp", href: "https://wa.me/917439980010" },
   ],
 };
 
@@ -60,7 +61,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} SkaleNest. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a
+            {/* <a
               href="/privacy"
               className="font-body text-xs text-text-secondary transition-colors hover:text-text-primary"
             >
@@ -71,7 +72,7 @@ export default function Footer() {
               className="font-body text-xs text-text-secondary transition-colors hover:text-text-primary"
             >
               Terms
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
