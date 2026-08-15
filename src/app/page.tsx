@@ -1,3 +1,6 @@
+import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
+import AmbientSpotlight from "@/components/AmbientSpotlight";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
@@ -16,22 +19,26 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="relative">
-      <Navbar />
-      <Hero />
-      <Problem />
-      <Services />
-      <Method />
-      <Process />
-      <Industries />
-      <Results />
-      <WhyUs />
-      <Referral />
-      <About />
-      <FAQ />
-      <Contact />
-      <FinalCTA />
-      <Footer />
-    </main>
+    <SmoothScroll>
+      <main className="relative selection:bg-gold selection:text-bg">
+        <ScrollProgress />
+        <AmbientSpotlight />
+        <Navbar />
+        <Hero />
+        <Problem />
+        <Services />
+        <Method />
+        <Process />
+        <Industries />
+        <Results />
+        <WhyUs />
+        <Referral />
+        <About />
+        <FAQ />
+        <Contact />
+        <FinalCTA />
+        <Footer />
+      </main>
+    </SmoothScroll>
   );
 }

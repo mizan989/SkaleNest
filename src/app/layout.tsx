@@ -34,6 +34,11 @@ export const metadata: Metadata = {
     "short-form content",
     "digital growth agency",
   ],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "SkaleNest — Where Businesses Grow",
     description: "Digital Growth Infrastructure for Modern Local Businesses.",
