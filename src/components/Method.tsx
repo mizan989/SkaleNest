@@ -42,8 +42,6 @@ export default function Method() {
 
   return (
     <section id="method" className="relative overflow-hidden border-b border-border bg-bg-secondary/70 py-28 lg:py-36">
-      <div className="absolute inset-0 grid-bg opacity-[0.25]" />
-      
       {/* Ambient background glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/5 blur-[120px]" />
 

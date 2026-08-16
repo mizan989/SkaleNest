@@ -90,40 +90,7 @@ textarea:focus-visible {
   text-wrap: balance;
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #f7dfa5 0%, #e4c083 30%, #c9a45c 70%, #a8874f 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
 
-.gold-shimmer-text {
-  background: linear-gradient(
-    90deg,
-    #c9a45c 0%,
-    #fff2cc 40%,
-    #e4c083 60%,
-    #c9a45c 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shine 6s linear infinite;
-}
-
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
-}
-
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(32, 43, 61, 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(32, 43, 61, 0.35) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
 
 .radial-mask-center {
   mask-image: radial-gradient(circle at center, black 40%, transparent 80%);

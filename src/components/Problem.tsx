@@ -86,7 +86,7 @@ export default function Problem() {
           <div className="mt-16 relative overflow-hidden rounded-2xl border border-gold/20 bg-gradient-to-r from-card/80 via-gold/[0.05] to-card/80 p-8 sm:p-10 text-center backdrop-blur-md">
             <p className="font-display text-2xl font-medium text-balance text-text-primary sm:text-3xl">
               SkaleNest turns these gaps into{" "}
-              <span className="gold-gradient-text">predictable growth infrastructure.</span>
+              <span className="text-gold">predictable growth infrastructure.</span>
             </p>
             <div className="mt-6 flex justify-center">
               <a

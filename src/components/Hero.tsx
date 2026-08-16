@@ -11,7 +11,6 @@ export default function Hero() {
       className="relative flex min-h-[92vh] items-center justify-center overflow-hidden border-b border-border pt-32 pb-20 lg:pt-36 lg:pb-28"
     >
       {/* Background Gradients & Network Canvas */}
-      <div className="absolute inset-0 grid-bg opacity-[0.35]" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg/50 to-bg" />
       <NetworkCanvas density={75} connectDistance={160} className="opacity-70" />
       
@@ -46,7 +45,7 @@ export default function Hero() {
             className="max-w-5xl font-display text-balance text-5xl font-semibold leading-[1.05] tracking-tight text-text-primary sm:text-7xl lg:text-8xl"
           >
             Build. Grow.{" "}
-            <span className="gold-shimmer-text">Scale.</span>
+            <span className="text-gold">Scale.</span>
           </motion.h1>
 
           {/* Subtitle */}

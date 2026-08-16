@@ -163,7 +163,7 @@ export default function Results() {
                 <SpotlightCard className="p-8 sm:p-14 text-center">
                   <p className="mx-auto max-w-2xl text-balance font-display text-2xl font-medium leading-snug text-text-primary sm:text-3xl">
                     We believe marketing should be measured by{" "}
-                    <span className="gold-gradient-text">verifiable revenue outcomes</span> — not vanity metrics.
+                    <span className="text-gold">verifiable revenue outcomes</span> — not vanity metrics.
                   </p>
                   <p className="mx-auto mt-6 max-w-xl font-body text-[15px] leading-relaxed text-text-secondary">
                     Every client engagement is instrumented with rigorous end-to-end tracking from day one — measuring search impressions, direction requests, phone enquiries, WhatsApp conversations, and customer acquisition cost.
