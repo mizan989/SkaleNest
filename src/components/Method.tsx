@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import { Code2, Search, Film, BarChart3, Repeat } from "lucide-react";
+import { ParallaxGlowOrb, ParallaxFloatingCrosshair } from "./ParallaxDecorations";
 
 const STEPS = [
   {
@@ -39,11 +40,24 @@ const STEPS = [
 
 export default function Method() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const beamParallaxY = useSpring(useTransform(scrollYProgress, [0, 1], [-25, 25]), {
+    stiffness: 100,
+    damping: 25,
+  });
 
   return (
-    <section id="method" className="relative overflow-hidden border-b border-border bg-bg-secondary/70 py-28 lg:py-36">
-      {/* Ambient background glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/5 blur-[120px]" />
+    <section ref={sectionRef} id="method" className="relative overflow-hidden border-b border-border bg-bg-secondary/70 py-28 lg:py-36">
+      {/* Ambient background glow & Parallax Elements */}
+      <ParallaxGlowOrb className="top-1/3 left-1/4" speed={85} size={550} color="gold" />
+      <ParallaxFloatingCrosshair className="top-14 right-14" label="CLOSED_LOOP.GROWTH.ENGINE" speed={40} />
+      <ParallaxFloatingCrosshair className="bottom-16 left-12" label="STAGE[01->04].SYNCHRONIZATION" speed={60} />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -60,10 +74,11 @@ export default function Method() {
           </Reveal>
         </div>
 
-        {/* Desktop: Connected Interactive Network */}
+        {/* Desktop: Connected Interactive Network with Parallax */}
         <div className="relative mt-24 hidden lg:block">
           {/* Connecting SVG with animated traveling beam */}
-          <svg
+          <motion.svg
+            style={{ y: beamParallaxY }}
             className="pointer-events-none absolute inset-0 h-full w-full"
             viewBox="0 0 1200 280"
             fill="none"
@@ -107,7 +122,7 @@ export default function Method() {
               viewport={{ once: true }}
               transition={{ duration: 2.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             />
-          </svg>
+          </motion.svg>
 
           {/* 4 Interactive Step Nodes */}
           <div className="relative grid grid-cols-4 gap-8">

@@ -1,9 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import { Globe, Eye, MessageSquareOff, TrendingDown, ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
+import { ParallaxGlowOrb, ParallaxFloatingCrosshair } from "./ParallaxDecorations";
 
 const PROBLEMS = [
   {
@@ -37,9 +39,18 @@ const PROBLEMS = [
 ];
 
 export default function Problem() {
+  const containerRef = useRef<HTMLElement>(null);
+
   return (
-    <section className="relative border-b border-border bg-bg-secondary/60 py-28 lg:py-36">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section ref={containerRef} className="relative overflow-hidden border-b border-border bg-bg-secondary/60 py-28 lg:py-36">
+      {/* Ambient Parallax Elements */}
+      <ParallaxGlowOrb className="-top-32 -left-20" speed={100} size={500} color="gold" />
+      <ParallaxGlowOrb className="bottom-0 -right-24" speed={70} size={450} color="gold" />
+      
+      <ParallaxFloatingCrosshair className="top-16 right-12" label="SYS.AUDIT // GAP.ANALYSIS" speed={45} />
+      <ParallaxFloatingCrosshair className="bottom-20 left-10" label="INFRASTRUCTURE.METRICS" speed={60} />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
           <Eyebrow>The Growth Gap</Eyebrow>
           <h2 className="mt-6 max-w-2xl text-balance font-display text-4xl font-semibold leading-tight tracking-tight text-text-primary sm:text-5xl">

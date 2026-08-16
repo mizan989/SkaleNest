@@ -1,9 +1,12 @@
 "use client";
 
+import { useRef } from "react";
 import { Code2, MapPin, Clapperboard, MessagesSquare, CheckCircle2, ArrowUpRight } from "lucide-react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
+import ParallaxElement from "./ParallaxElement";
+import { ParallaxGlowOrb, ParallaxFloatingCrosshair } from "./ParallaxDecorations";
 
 const SERVICES = [
   {
@@ -69,9 +72,16 @@ const SERVICES = [
 ];
 
 export default function Services() {
+  const containerRef = useRef<HTMLElement>(null);
+
   return (
-    <section id="services" className="relative border-b border-border py-28 lg:py-36">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section ref={containerRef} id="services" className="relative overflow-hidden border-b border-border py-28 lg:py-36">
+      {/* Ambient Parallax Elements */}
+      <ParallaxGlowOrb className="top-1/4 -right-28" speed={90} size={500} color="gold" />
+      <ParallaxFloatingCrosshair className="top-20 right-16" label="STACK.ARCHITECTURE // 4-PILLARS" speed={50} />
+      <ParallaxFloatingCrosshair className="bottom-16 left-12" label="COMPOUNDING.REVENUE.SYSTEM" speed={65} />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <Reveal>
             <Eyebrow>What We Build</Eyebrow>
@@ -86,62 +96,67 @@ export default function Services() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4 items-stretch">
           {SERVICES.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.1}>
-              <SpotlightCard className="flex h-full flex-col justify-between border-border/80 bg-card/60 p-7 lg:p-8">
-                <div>
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-gold/[0.08] shadow-[0_0_15px_rgba(201,164,92,0.15)]">
-                      <s.icon size={22} className="text-gold" strokeWidth={1.5} />
+            <Reveal key={s.n} delay={i * 0.1} className="h-full">
+              <ParallaxElement
+                speed={i % 2 === 1 ? 25 : -15}
+                className="h-full"
+              >
+                <SpotlightCard className="flex h-full flex-col justify-between border-border/80 bg-card/60 p-7 lg:p-8 transition-all duration-300 hover:border-gold/30">
+                  <div>
+                    <div className="flex items-start justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-gold/[0.08] shadow-[0_0_15px_rgba(201,164,92,0.15)]">
+                        <s.icon size={22} className="text-gold" strokeWidth={1.5} />
+                      </div>
+                      <span className="font-mono text-xs text-text-secondary/70">
+                        STACK {s.n}
+                      </span>
                     </div>
-                    <span className="font-mono text-xs text-text-secondary/70">
-                      STACK {s.n}
-                    </span>
+
+                    <div className="mt-8">
+                      <span className="inline-block rounded-md border border-gold/20 bg-gold/[0.05] px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest2 text-gold">
+                        {s.tag}
+                      </span>
+                      <h3 className="mt-3.5 font-display text-2xl font-semibold text-text-primary">
+                        {s.title}
+                      </h3>
+                      <p className="mt-3 font-body text-[15px] leading-relaxed text-text-secondary">
+                        {s.body}
+                      </p>
+                    </div>
+
+                    <ul className="mt-8 flex flex-col gap-3.5 border-t border-border/70 pt-7">
+                      {s.items.map((item) => (
+                        <li
+                          key={item}
+                          className="group/item flex items-start gap-3 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
+                        >
+                          <CheckCircle2
+                            size={16}
+                            className="mt-0.5 shrink-0 text-gold transition-transform duration-200 group-hover/item:scale-110"
+                            strokeWidth={2}
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <div className="mt-8">
-                    <span className="inline-block rounded-md border border-gold/20 bg-gold/[0.05] px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest2 text-gold">
-                      {s.tag}
-                    </span>
-                    <h3 className="mt-3.5 font-display text-2xl font-semibold text-text-primary">
-                      {s.title}
-                    </h3>
-                    <p className="mt-3 font-body text-[15px] leading-relaxed text-text-secondary">
-                      {s.body}
-                    </p>
+                  <div className="mt-8 pt-4">
+                    <a
+                      href="#contact"
+                      className="group inline-flex items-center gap-1.5 font-body text-xs font-semibold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
+                    >
+                      <span>Implement this system</span>
+                      <ArrowUpRight
+                        size={14}
+                        className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
+                    </a>
                   </div>
-
-                  <ul className="mt-8 flex flex-col gap-3.5 border-t border-border/70 pt-7">
-                    {s.items.map((item) => (
-                      <li
-                        key={item}
-                        className="group/item flex items-start gap-3 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
-                      >
-                        <CheckCircle2
-                          size={16}
-                          className="mt-0.5 shrink-0 text-gold transition-transform duration-200 group-hover/item:scale-110"
-                          strokeWidth={2}
-                        />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-8 pt-4">
-                  <a
-                    href="#contact"
-                    className="group inline-flex items-center gap-1.5 font-body text-xs font-semibold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
-                  >
-                    <span>Implement this system</span>
-                    <ArrowUpRight
-                      size={14}
-                      className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </a>
-                </div>
-              </SpotlightCard>
+                </SpotlightCard>
+              </ParallaxElement>
             </Reveal>
           ))}
         </div>

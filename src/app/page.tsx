@@ -3,6 +3,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import AmbientSpotlight from "@/components/AmbientSpotlight";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import ParallaxMarquee from "@/components/ParallaxMarquee";
 import Problem from "@/components/Problem";
 import Services from "@/components/Services";
 import Method from "@/components/Method";
@@ -22,6 +23,7 @@ export default function Home() {
         <AmbientSpotlight />
         <Navbar />
         <Hero />
+        <ParallaxMarquee />
         <Problem />
         <Services />
         <Method />

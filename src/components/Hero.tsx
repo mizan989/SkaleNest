@@ -1,24 +1,62 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowUpRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
 import NetworkCanvas from "./NetworkCanvas";
+import HeroParallaxBadges from "./HeroParallaxBadges";
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Background Parallax Transforms
+  const bgGlowY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 180]), {
+    stiffness: 90,
+    damping: 25,
+  });
+  const bgCanvasY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 90]), {
+    stiffness: 90,
+    damping: 25,
+  });
+  const contentY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 60]), {
+    stiffness: 90,
+    damping: 25,
+  });
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.2]);
+
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="relative flex min-h-[92vh] items-center justify-center overflow-hidden border-b border-border pt-32 pb-20 lg:pt-36 lg:pb-28"
     >
-      {/* Background Gradients & Network Canvas */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg/50 to-bg" />
-      <NetworkCanvas density={75} connectDistance={160} className="opacity-70" />
-      
-      {/* Ambient Radial Glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[650px] w-[650px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial-fade opacity-80" />
-      <div className="pointer-events-none absolute top-1/4 right-1/4 h-[350px] w-[350px] rounded-full bg-gold/5 blur-[100px]" />
+      {/* Parallax Floating HUD Badges */}
+      <HeroParallaxBadges containerRef={sectionRef} />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-10">
+      {/* Background Gradients & Network Canvas with Parallax */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg/50 to-bg" />
+      <motion.div style={{ y: bgCanvasY }} className="absolute inset-0 pointer-events-none">
+        <NetworkCanvas density={75} connectDistance={160} className="opacity-70" />
+      </motion.div>
+      
+      {/* Ambient Parallax Radial Glow */}
+      <motion.div
+        style={{ y: bgGlowY }}
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[650px] w-[650px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial-fade opacity-80"
+      />
+      <motion.div
+        style={{ y: bgGlowY }}
+        className="pointer-events-none absolute top-1/4 right-1/4 h-[350px] w-[350px] rounded-full bg-gold/5 blur-[100px]"
+      />
+
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-10"
+      >
         <div className="flex flex-col items-center text-center">
           
           {/* Live Status Badge */}
@@ -115,7 +153,7 @@ export default function Hero() {
           </motion.div>
 
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll Down Indicator */}
       <motion.div

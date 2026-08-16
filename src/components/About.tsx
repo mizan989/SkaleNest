@@ -1,9 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
 import { Quote, Code2, Target, RefreshCw, TrendingUp } from "lucide-react";
+import { ParallaxGlowOrb, ParallaxFloatingCrosshair } from "./ParallaxDecorations";
 
 const PRINCIPLES = [
   {
@@ -29,9 +31,15 @@ const PRINCIPLES = [
 ];
 
 export default function About() {
+  const containerRef = useRef<HTMLElement>(null);
+
   return (
-    <section id="about" className="relative border-b border-border bg-bg-secondary/70 py-28 lg:py-36">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section ref={containerRef} id="about" className="relative overflow-hidden border-b border-border bg-bg-secondary/70 py-28 lg:py-36">
+      {/* Ambient Parallax Elements */}
+      <ParallaxGlowOrb className="-top-24 -left-20" speed={75} size={500} color="gold" />
+      <ParallaxFloatingCrosshair className="top-16 right-16" label="FOUNDATIONAL.PRINCIPLES" speed={45} />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid gap-16 lg:grid-cols-[1fr_1.15fr] lg:gap-16 items-start">
           <Reveal>
             <Eyebrow>About SkaleNest</Eyebrow>
