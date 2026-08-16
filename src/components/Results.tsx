@@ -9,9 +9,14 @@ import SpotlightCard from "./SpotlightCard";
 
 const COMPARISON = [
   {
+    category: "Web Architecture & Speed",
+    traditional: "Slow, generic WordPress or template sites that take 5+ seconds to load and lose 70% of visitors.",
+    skalenest: "Bespoke, high-performance modern web apps with sub-second load times and high-converting funnels.",
+  },
+  {
     category: "System Architecture",
-    traditional: "Isolated silos: one person for social, another for SEO, no integration.",
-    skalenest: "Unified Growth Engine: local search, short-form media & automation feed into each other.",
+    traditional: "Isolated silos: one freelancer for social, another for SEO, zero integration.",
+    skalenest: "Unified Growth Engine: website, local search, short-form media & automation feed into each other.",
   },
   {
     category: "Primary KPI",
@@ -31,7 +36,7 @@ const COMPARISON = [
   {
     category: "Long-Term Compounding",
     traditional: "Results stop the moment you pause ad spend or single posts.",
-    skalenest: "Permanent local SEO assets & automated CRM databases that compound over time.",
+    skalenest: "Permanent digital assets, high-ranking SEO & CRM databases that compound over time.",
   },
 ];
 

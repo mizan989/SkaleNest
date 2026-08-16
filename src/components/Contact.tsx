@@ -10,12 +10,13 @@ import SpotlightCard from "./SpotlightCard";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnpavapk";
 
 const SERVICE_OPTIONS = [
-  "Complete Digital Growth Stack",
+  "Full Digital Growth Stack (Website + SEO + Media + Automation)",
+  "High-Converting Website Creation & Web Architecture",
   "Local SEO & Google Maps Dominance",
   "Short-Form Video Production & Content",
   "WhatsApp CRM & Marketing Automation",
-  "Paid Local Advertising (Meta/Google)",
-  "Referral Partner Inquiry",
+  "Paid Local Advertising (Meta / Google)",
+  "Partner / Growth Inquiry",
   "Other / Custom Request",
 ];
 

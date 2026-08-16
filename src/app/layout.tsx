@@ -24,15 +24,19 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SkaleNest — Where Businesses Grow",
+  title: "SkaleNest — Digital Marketing & High-Converting Website Creation",
   description:
-    "Digital Growth Infrastructure for Modern Local Businesses. SkaleNest helps local businesses get discovered, attract customers, and build systems for sustainable growth.",
+    "We build high-converting websites, dominate Google Maps local SEO, produce high-retention video content, and automate WhatsApp CRM funnels for ambitious businesses.",
   keywords: [
-    "local SEO",
-    "Google Business Profile",
-    "WhatsApp automation",
-    "short-form content",
-    "digital growth agency",
+    "website creation for business",
+    "custom web design agency",
+    "digital marketing agency",
+    "high-converting websites",
+    "local SEO agency",
+    "Google Business Profile optimization",
+    "WhatsApp marketing automation",
+    "short-form video production",
+    "conversion rate optimization",
   ],
   icons: {
     icon: "/logo.png",
@@ -40,8 +44,9 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "SkaleNest — Where Businesses Grow",
-    description: "Digital Growth Infrastructure for Modern Local Businesses.",
+    title: "SkaleNest — Digital Marketing & Website Creation for Businesses",
+    description:
+      "High-converting website design, local search dominance, visual content, and automated CRM growth systems.",
     type: "website",
   },
 };

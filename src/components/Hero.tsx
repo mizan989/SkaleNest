@@ -34,7 +34,7 @@ export default function Hero() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
             </span>
             <span className="font-mono text-xs font-medium uppercase tracking-widest2 text-gold">
-              Digital Growth Infrastructure
+              Digital Marketing & Web Architecture
             </span>
           </motion.div>
 
@@ -56,9 +56,8 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="mt-7 max-w-2xl text-balance font-body text-base text-text-secondary sm:text-xl sm:leading-relaxed"
           >
-            Your business deserves a digital presence that works as hard as you do.
-            SkaleNest engineers connected systems for local businesses to get discovered,
-            attract qualified customers, and scale sustainably.
+            We build high-converting websites, dominate local search, produce high-retention media,
+            and deploy automated nurture funnels to turn clicks into predictable business revenue.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -96,19 +95,23 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.6 }}
-            className="mt-14 flex flex-wrap items-center justify-center gap-6 text-xs text-text-secondary"
+            className="mt-14 flex flex-wrap items-center justify-center gap-4 text-xs text-text-secondary"
           >
             <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
               <Zap size={14} className="text-gold" />
-              <span>Tailored Local Systems</span>
+              <span>High-Converting Websites</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
+              <ShieldCheck size={14} className="text-gold" />
+              <span>Google Maps Dominance</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
+              <Sparkles size={14} className="text-gold" />
+              <span>Automated CRM Funnels</span>
             </div>
             <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
               <ShieldCheck size={14} className="text-gold" />
               <span>Outcomes Over Vanity</span>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
-              <Sparkles size={14} className="text-gold" />
-              <span>40% Net Profit Referral Program</span>
             </div>
           </motion.div>
 

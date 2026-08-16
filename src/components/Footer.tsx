@@ -11,6 +11,7 @@ type FooterLink = {
 
 const FOOTER_LINKS: Record<string, FooterLink[]> = {
   Services: [
+    { label: "High-Converting Websites", href: "#services" },
     { label: "Local Search & Maps", href: "#services" },
     { label: "Short-Form Video & Content", href: "#services" },
     { label: "WhatsApp Automation & CRM", href: "#services" },
@@ -18,9 +19,8 @@ const FOOTER_LINKS: Record<string, FooterLink[]> = {
   ],
   Company: [
     { label: "About SkaleNest", href: "#about" },
-    { label: "Our Process", href: "#process" },
+    { label: "Industries Served", href: "#industries" },
     { label: "Measurement Standards", href: "#results" },
-    { label: "Referral Network (40% Share)", href: "#referral" },
     { label: "FAQ", href: "#faq" },
     { label: "Contact Us", href: "#contact" },
   ],

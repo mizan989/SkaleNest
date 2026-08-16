@@ -8,12 +8,11 @@ import Logo from "./Logo";
 const LINKS = [
   { label: "Services", href: "#services" },
   { label: "Method", href: "#method" },
-  { label: "Process", href: "#process" },
   { label: "Industries", href: "#industries" },
   { label: "Results", href: "#results" },
-  { label: "Referral", href: "#referral" },
   { label: "About", href: "#about" },
   { label: "FAQ", href: "#faq" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {

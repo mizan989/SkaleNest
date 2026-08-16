@@ -6,11 +6,8 @@ import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
 import Services from "@/components/Services";
 import Method from "@/components/Method";
-import Process from "@/components/Process";
 import Industries from "@/components/Industries";
 import Results from "@/components/Results";
-import WhyUs from "@/components/WhyUs";
-import Referral from "@/components/Referral";
 import About from "@/components/About";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
@@ -28,11 +25,8 @@ export default function Home() {
         <Problem />
         <Services />
         <Method />
-        <Process />
         <Industries />
         <Results />
-        <WhyUs />
-        <Referral />
         <About />
         <FAQ />
         <Contact />

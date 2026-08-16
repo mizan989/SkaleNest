@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, MessageSquareOff, TrendingDown, ArrowRight } from "lucide-react";
+import { Globe, Eye, MessageSquareOff, TrendingDown, ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
@@ -8,24 +8,31 @@ import SpotlightCard from "./SpotlightCard";
 const PROBLEMS = [
   {
     n: "01",
-    icon: Eye,
-    title: "Not Being Found",
-    body: "Customers are searching for businesses like yours every day. If you're invisible on Google Search and Maps, competitors get the customer by default.",
-    accent: "Local Visibility Void",
+    icon: Globe,
+    title: "Outdated & Non-Converting Websites",
+    body: "Slow loading speeds, outdated templates, and clumsy mobile interfaces cause over 70% of prospective buyers to bounce before taking any action.",
+    accent: "Conversion Leakage",
   },
   {
     n: "02",
-    icon: MessageSquareOff,
-    title: "Not Being Remembered",
-    body: "Your offline reputation might be strong, but inconsistent or low-impact digital content makes it impossible for prospects to recall or trust your brand.",
-    accent: "Brand Retention Gap",
+    icon: Eye,
+    title: "Local Search Invisibility",
+    body: "Customers are searching for your services daily. If you're invisible on Google Search and Maps, nearby competitors win the customer by default.",
+    accent: "Local Visibility Void",
   },
   {
     n: "03",
+    icon: MessageSquareOff,
+    title: "Weak Visual Authority & Recall",
+    body: "Your offline service might be world-class, but lacking engaging video and digital content makes it impossible for prospects to remember or trust your brand.",
+    accent: "Brand Retention Gap",
+  },
+  {
+    n: "04",
     icon: TrendingDown,
-    title: "Losing Interested Enquiries",
-    body: "Enquiries come in, but slow responses and lack of automated follow-ups turn warm prospects into abandoned leads and lost revenue.",
-    accent: "Conversion Drop-off",
+    title: "Slow Responses & Lost Leads",
+    body: "Enquiries come in, but manual responses hours later and lack of automated follow-ups turn warm buyers into abandoned leads and lost revenue.",
+    accent: "Lead Follow-up Void",
   },
 ];
 
@@ -43,10 +50,10 @@ export default function Problem() {
           </p>
         </Reveal>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PROBLEMS.map((p, i) => (
-            <Reveal key={p.n} delay={i * 0.12}>
-              <SpotlightCard className="h-full border-border/80 bg-card/60 p-8 transition-all duration-300 hover:border-gold/30">
+            <Reveal key={p.n} delay={i * 0.1}>
+              <SpotlightCard className="h-full border-border/80 bg-card/60 p-7 transition-all duration-300 hover:border-gold/30">
                 <div className="flex h-full flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between">
@@ -86,7 +93,7 @@ export default function Problem() {
                 href="#services"
                 className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest2 text-gold transition-colors hover:text-gold-bright"
               >
-                <span>Discover our 3-tier growth stack</span>
+                <span>Discover our 4-pillar growth stack</span>
                 <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </a>
             </div>

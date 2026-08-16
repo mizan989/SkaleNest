@@ -8,32 +8,36 @@ import Eyebrow from "./Eyebrow";
 
 const FAQS = [
   {
-    q: "How much do your services cost?",
-    a: "Pricing is transparent and customized based on your business scope — channels required (Google Maps, Content, WhatsApp Automation), volume of content, and system complexity. We provide an exact itemized proposal following your free growth audit.",
+    q: "Do you design and build custom websites for businesses?",
+    a: "Yes. We create bespoke, ultra-fast, mobile-first websites and landing pages engineered specifically for high conversion rates. Every site includes modern UI/UX design, built-in Local SEO and Schema markup, lightning-fast performance, and integrated lead capture funnels (WhatsApp and contact forms).",
   },
   {
-    q: "How long does it take to see tangible results?",
-    a: "Timelines vary by stack layer: Local SEO & Google Maps improvements typically show measurable search ranking movement within 4–8 weeks. Content compounds attention and trust progressively over 1–3 months. WhatsApp automation begins qualifying and converting enquiries immediately upon deployment.",
+    q: "How long does it take to design and launch a new business website?",
+    a: "A typical high-converting business website or landing page funnel is delivered and launched within 1 to 3 weeks, depending on the scope of custom features, content assets, and CRM integrations required.",
+  },
+  {
+    q: "What tech stack do you use for website development?",
+    a: "We utilize modern, high-performance web frameworks like Next.js, React, and Tailwind CSS. This ensures your website loads in under a second, scores 90+ on Google PageSpeed Insights, and ranks significantly higher on search engines than bloated WordPress templates.",
+  },
+  {
+    q: "How much do your website and digital marketing services cost?",
+    a: "Pricing is transparent and customized based on your business scope — whether you need a standalone high-converting website, Local SEO & Google Maps optimization, short-form content production, or our complete connected growth stack. We provide an exact itemized proposal following your free growth audit.",
+  },
+  {
+    q: "How long does it take to see tangible marketing results?",
+    a: "New websites and WhatsApp automation start capturing and converting leads immediately upon launch. Local SEO & Google Maps rank optimizations typically show measurable movements within 4–8 weeks, and short-form video content compounds brand trust and inbound volume over 1–3 months.",
   },
   {
     q: "Do you work with businesses across different cities?",
-    a: "Yes. Our core infrastructure (content creative strategy, WhatsApp automation, review engines, local SEO architecture) is fully remote-capable. Geo-targeted SEO is customized for whichever specific cities and service areas your business covers.",
+    a: "Yes. Our web development and digital marketing infrastructure is fully remote-capable. We engineer geo-targeted local SEO and custom digital assets tailored to whichever specific cities and service territories your business operates in.",
   },
   {
-    q: "Do you offer customized packages for specific business sizes?",
-    a: "Absolutely. We reject cookie-cutter agency templates. Every business gets an infrastructure stack architected specifically around its current customer acquisition bottlenecks and growth targets.",
-  },
-  {
-    q: "Do you create and edit the short-form content?",
+    q: "Do you create and edit the short-form content and ad creatives?",
     a: "Yes. Our team handles creative hooks, shooting guidance/scripts, professional high-retention video editing, captions, and publishing workflows depending on your chosen scope.",
   },
   {
-    q: "Do we need an existing social media or digital presence to start?",
-    a: "No. We build your digital infrastructure from the ground up, or audit, optimize, and scale what you already have in place.",
-  },
-  {
     q: "How do we get started with SkaleNest?",
-    a: "Simply request a free growth audit through the contact form below. Our team reviews your local search presence and current digital assets, then delivers a clear action roadmap.",
+    a: "Simply request a free growth audit through the contact form below. Our team reviews your current website and local digital presence, then delivers a clear action roadmap.",
   },
 ];
 

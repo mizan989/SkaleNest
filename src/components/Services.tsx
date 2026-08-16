@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, Clapperboard, MessagesSquare, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { Code2, MapPin, Clapperboard, MessagesSquare, CheckCircle2, ArrowUpRight } from "lucide-react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
@@ -8,43 +8,58 @@ import SpotlightCard from "./SpotlightCard";
 const SERVICES = [
   {
     n: "01",
-    tag: "DISCOVER",
-    icon: MapPin,
-    title: "Local Search & Google Maps",
-    body: "Dominate the high-intent local search queries where customers are ready to buy immediately.",
+    tag: "ARCHITECT",
+    icon: Code2,
+    title: "High-Converting Websites & Funnels",
+    body: "Custom-built, ultra-fast websites engineered to turn visitors into paying customers from day one.",
     items: [
-      "Google Business Profile optimization",
-      "Google Maps rank tracking & authority",
-      "Local SEO & citation building",
-      "Localized keyword & competitor mapping",
-      "Automated review & reputation engine",
-      "Local prominence & geo-grid scaling",
+      "Custom responsive design & modern UI/UX",
+      "Next.js & React speed optimization (95+ score)",
+      "Conversion-focused landing pages & funnels",
+      "Integrated lead capture & WhatsApp triggers",
+      "Built-in Local SEO & structured Schema data",
+      "Mobile-first architecture & seamless booking",
     ],
   },
   {
     n: "02",
+    tag: "DISCOVER",
+    icon: MapPin,
+    title: "Local Search & Google Maps",
+    body: "Dominate high-intent local search queries where customers are ready to buy immediately in your area.",
+    items: [
+      "Google Business Profile optimization",
+      "Google Maps rank tracking & geo-grid scaling",
+      "Local SEO & high-authority citation building",
+      "Localized keyword & competitor gap mapping",
+      "Automated review & reputation engine",
+      "Local prominence & search authority",
+    ],
+  },
+  {
+    n: "03",
     tag: "ATTRACT",
     icon: Clapperboard,
     title: "Short-Form Content & Media",
     body: "Turn fleeting attention into trusted brand authority through high-retention visual content.",
     items: [
-      "Strategic Reels & TikTok production",
-      "Short-form video editing & scripting",
-      "Brand storytelling & visual hooks",
-      "Platform-native creative strategy",
-      "High-converting paid ad creatives",
-      "Content calendar & distribution workflow",
+      "Strategic Reels & short-form video production",
+      "Hook scripting & professional video editing",
+      "Brand storytelling & visual social identity",
+      "Platform-native creative & ad creatives",
+      "High-converting paid local ad campaigns",
+      "Content calendar & distribution workflows",
     ],
   },
   {
-    n: "03",
+    n: "04",
     tag: "CONVERT",
     icon: MessagesSquare,
     title: "WhatsApp Automation & CRM",
     body: "Turn anonymous clicks into conversations and conversations into long-term repeat customers.",
     items: [
-      "Instant lead capture & WhatsApp triggers",
-      "Intelligent automated reply sequences",
+      "Instant lead capture & instant WhatsApp triggers",
+      "Intelligent automated reply & qualification sequences",
       "Multi-step nurture & booking workflows",
       "Automated customer appointment reminders",
       "VIP re-engagement & loyalty broadcasts",
@@ -71,10 +86,10 @@ export default function Services() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid gap-6 lg:grid-cols-3">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {SERVICES.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.12}>
-              <SpotlightCard className="flex h-full flex-col justify-between border-border/80 bg-card/60 p-8 lg:p-9">
+            <Reveal key={s.n} delay={i * 0.1}>
+              <SpotlightCard className="flex h-full flex-col justify-between border-border/80 bg-card/60 p-7 lg:p-8">
                 <div>
                   <div className="flex items-start justify-between">
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-gold/[0.08] shadow-[0_0_15px_rgba(201,164,92,0.15)]">

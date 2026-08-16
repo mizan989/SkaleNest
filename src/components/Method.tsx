@@ -4,35 +4,35 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
-import { Search, Film, MessageCircle, BarChart3, Repeat } from "lucide-react";
+import { Code2, Search, Film, BarChart3, Repeat } from "lucide-react";
 
 const STEPS = [
   {
     n: "01",
-    title: "Discover",
-    tagline: "High-Intent Local Search",
-    body: "Get your business right in front of people actively looking to buy in your area.",
-    icon: Search,
+    title: "Architect",
+    tagline: "High-Converting Web Engine",
+    body: "Build an ultra-fast, mobile-first website and conversion funnels designed to turn clicks into paying customers.",
+    icon: Code2,
   },
   {
     n: "02",
-    title: "Attract",
-    tagline: "High-Retention Visual Media",
-    body: "Create strategic short-form content and brand stories that capture attention and build authority.",
-    icon: Film,
+    title: "Discover",
+    tagline: "High-Intent Local Search",
+    body: "Dominate Google Maps & Local SEO to get your business directly in front of active local buyers.",
+    icon: Search,
   },
   {
     n: "03",
-    title: "Convert",
-    tagline: "Automated Instant Nurture",
-    body: "Capture, follow up with, and nurture every prospective lead over WhatsApp instantly.",
-    icon: MessageCircle,
+    title: "Attract",
+    tagline: "High-Retention Visual Media",
+    body: "Create strategic short-form content and targeted ad campaigns that build deep brand trust and demand.",
+    icon: Film,
   },
   {
     n: "04",
-    title: "Grow",
-    tagline: "Compounding System Feedback",
-    body: "Analyze performance data, optimize conversions, and feed insights directly back into Discover.",
+    title: "Convert & Scale",
+    tagline: "Automated CRM & Compounding Growth",
+    body: "Capture leads instantly on WhatsApp, automate appointment booking, and feed conversion data back into scaling.",
     icon: BarChart3,
   },
 ];
@@ -52,12 +52,12 @@ export default function Method() {
           <Reveal>
             <Eyebrow>The SkaleNest Method</Eyebrow>
             <h2 className="mt-6 max-w-2xl text-balance font-display text-4xl font-semibold leading-tight tracking-tight text-text-primary sm:text-5xl">
-              Discover. Attract. Convert. Grow.
+              Architect. Discover. Attract. Convert.
             </h2>
           </Reveal>
           <Reveal delay={0.15}>
             <p className="max-w-md font-body text-sm leading-relaxed text-text-secondary">
-              A closed-loop growth engine — not isolated tactics. Every stage fuels the next, creating compounding momentum over time.
+              A closed-loop digital growth engine — where high-speed websites, local search dominance, viral content, and CRM automation work in complete synergy.
             </p>
           </Reveal>
         </div>
@@ -155,7 +155,7 @@ export default function Method() {
           <div className="mt-12 flex items-center justify-center gap-2">
             <Repeat size={14} className="text-gold animate-spin" style={{ animationDuration: "12s" }} />
             <p className="font-mono text-xs uppercase tracking-widest2 text-text-secondary">
-              Stage 04 (Grow) feeds actionable data directly back into Stage 01 (Discover)
+              Stage 04 (Convert & Scale) feeds actionable conversion insights back into Stage 01 (Architect)
             </p>
           </div>
         </div>
