@@ -6,7 +6,7 @@ import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
 import ParallaxElement from "./ParallaxElement";
-import { ParallaxGlowOrb, ParallaxFloatingCrosshair } from "./ParallaxDecorations";
+import { ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 
 const SERVICES = [
   {
@@ -23,6 +23,8 @@ const SERVICES = [
       "Built-in Local SEO & structured Schema data",
       "Mobile-first architecture & seamless booking",
     ],
+    speed: -25,
+    mobileSpeed: -10,
   },
   {
     n: "02",
@@ -38,6 +40,8 @@ const SERVICES = [
       "Automated review & reputation engine",
       "Local prominence & search authority",
     ],
+    speed: 35,
+    mobileSpeed: 12,
   },
   {
     n: "03",
@@ -53,6 +57,8 @@ const SERVICES = [
       "High-converting paid local ad campaigns",
       "Content calendar & distribution workflows",
     ],
+    speed: -20,
+    mobileSpeed: -8,
   },
   {
     n: "04",
@@ -68,6 +74,8 @@ const SERVICES = [
       "VIP re-engagement & loyalty broadcasts",
       "Direct integration with your business stack",
     ],
+    speed: 40,
+    mobileSpeed: 14,
   },
 ];
 
@@ -75,66 +83,70 @@ export default function Services() {
   const containerRef = useRef<HTMLElement>(null);
 
   return (
-    <section ref={containerRef} id="services" className="relative overflow-hidden border-b border-border py-28 lg:py-36">
-      {/* Ambient Parallax Elements */}
-      <ParallaxGlowOrb className="top-1/4 -right-28" speed={90} size={500} color="gold" />
-      <ParallaxFloatingCrosshair className="top-20 right-16" label="STACK.ARCHITECTURE // 4-PILLARS" speed={50} />
-      <ParallaxFloatingCrosshair className="bottom-16 left-12" label="COMPOUNDING.REVENUE.SYSTEM" speed={65} />
+    <section ref={containerRef} id="services" className="relative border-b border-border py-24 sm:py-28 lg:py-36">
+      {/* Background Architectural Grid */}
+      <ParallaxArchitecturalGrid speed={25} />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
+      {/* Floating Telemetry Crosshairs */}
+      <ParallaxFloatingCrosshair className="top-16 right-6 sm:right-16" label="STACK.ARCHITECTURE // 4-PILLARS" speed={35} />
+      <ParallaxFloatingCrosshair className="bottom-14 left-6 sm:left-12" label="COMPOUNDING.REVENUE.SYSTEM" speed={45} />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <Reveal>
             <Eyebrow>What We Build</Eyebrow>
-            <h2 className="mt-6 max-w-2xl text-balance font-display text-4xl font-semibold leading-tight tracking-tight text-text-primary sm:text-5xl">
+            <h2 className="mt-5 max-w-2xl text-balance font-display text-3xl font-semibold leading-tight tracking-tight text-text-primary sm:text-5xl">
               Your complete digital growth stack.
             </h2>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="max-w-md font-body text-sm text-text-secondary">
+            <p className="max-w-md font-body text-base text-text-secondary leading-relaxed">
               Engineered as an interconnected machine — each layer amplifies the others to drive compounding local revenue.
             </p>
           </Reveal>
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4 items-stretch">
+        <div className="mt-14 sm:mt-16 grid gap-5 sm:gap-6 md:grid-cols-2 xl:grid-cols-4 items-stretch">
           {SERVICES.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.1} className="h-full">
+            <Reveal key={s.n} delay={i * 0.08} className="h-full">
               <ParallaxElement
-                speed={i % 2 === 1 ? 25 : -15}
+                speed={s.speed}
+                mobileSpeed={s.mobileSpeed}
+                tilt3D={true}
                 className="h-full"
               >
-                <SpotlightCard className="flex h-full flex-col justify-between border-border/80 bg-card/60 p-7 lg:p-8 transition-all duration-300 hover:border-gold/30">
+                <SpotlightCard className="flex h-full flex-col justify-between border-border/80 bg-card p-6 sm:p-7 lg:p-8 transition-all duration-300 hover:border-gold/40">
                   <div>
                     <div className="flex items-start justify-between">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-gold/[0.08] shadow-[0_0_15px_rgba(201,164,92,0.15)]">
-                        <s.icon size={22} className="text-gold" strokeWidth={1.5} />
+                      <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-gold/10">
+                        <s.icon size={20} className="text-gold sm:size-[22px]" strokeWidth={1.5} />
                       </div>
-                      <span className="font-mono text-xs text-text-secondary/70">
+                      <span className="font-mono text-xs text-text-secondary">
                         STACK {s.n}
                       </span>
                     </div>
 
-                    <div className="mt-8">
-                      <span className="inline-block rounded-md border border-gold/20 bg-gold/[0.05] px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest2 text-gold">
+                    <div className="mt-6 sm:mt-8">
+                      <span className="inline-block rounded-md bg-gold/10 px-2.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-gold">
                         {s.tag}
                       </span>
-                      <h3 className="mt-3.5 font-display text-2xl font-semibold text-text-primary">
+                      <h3 className="mt-3 font-display text-xl sm:text-2xl font-semibold text-text-primary leading-snug">
                         {s.title}
                       </h3>
-                      <p className="mt-3 font-body text-[15px] leading-relaxed text-text-secondary">
+                      <p className="mt-3 font-body text-sm leading-relaxed text-text-secondary">
                         {s.body}
                       </p>
                     </div>
 
-                    <ul className="mt-8 flex flex-col gap-3.5 border-t border-border/70 pt-7">
+                    <ul className="mt-6 sm:mt-8 flex flex-col gap-3 border-t border-border/70 pt-6">
                       {s.items.map((item) => (
                         <li
                           key={item}
-                          className="group/item flex items-start gap-3 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
+                          className="group/item flex items-start gap-2.5 sm:gap-3 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
                         >
                           <CheckCircle2
                             size={16}
-                            className="mt-0.5 shrink-0 text-gold transition-transform duration-200 group-hover/item:scale-110"
+                            className="mt-0.5 shrink-0 text-gold/80 transition-colors group-hover/item:text-gold"
                             strokeWidth={2}
                           />
                           <span>{item}</span>
@@ -143,15 +155,15 @@ export default function Services() {
                     </ul>
                   </div>
 
-                  <div className="mt-8 pt-4">
+                  <div className="mt-8 border-t border-border/70 pt-5">
                     <a
                       href="#contact"
-                      className="group inline-flex items-center gap-1.5 font-body text-xs font-semibold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
+                      className="group/link flex items-center justify-between font-mono text-xs font-semibold text-gold transition-colors hover:text-gold-bright"
                     >
-                      <span>Implement this system</span>
+                      <span>Explore Pillar {s.n}</span>
                       <ArrowUpRight
-                        size={14}
-                        className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        size={15}
+                        className="transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
                       />
                     </a>
                   </div>

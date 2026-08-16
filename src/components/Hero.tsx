@@ -1,86 +1,72 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowUpRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
 import NetworkCanvas from "./NetworkCanvas";
-import HeroParallaxBadges from "./HeroParallaxBadges";
+import { ParallaxArchitecturalGrid, ParallaxGlowOrb } from "./ParallaxDecorations";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
 
-  // Background Parallax Transforms
-  const bgGlowY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 180]), {
-    stiffness: 90,
-    damping: 25,
-  });
-  const bgCanvasY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 90]), {
-    stiffness: 90,
-    damping: 25,
-  });
-  const contentY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 60]), {
-    stiffness: 90,
-    damping: 25,
-  });
+  // Background Multi-Layer Parallax Transforms
+  const bgGlowY = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, isMobile ? 80 : 180]),
+    { stiffness: 90, damping: 25 }
+  );
+  const bgCanvasY = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, isMobile ? 40 : 90]),
+    { stiffness: 90, damping: 25 }
+  );
+  const contentY = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, isMobile ? 35 : 70]),
+    { stiffness: 90, damping: 25 }
+  );
+  const pillsY = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, isMobile ? 20 : 50]),
+    { stiffness: 90, damping: 25 }
+  );
   const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.2]);
 
   return (
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-[92vh] items-center justify-center overflow-hidden border-b border-border pt-32 pb-20 lg:pt-36 lg:pb-28"
+      className="relative flex min-h-[92vh] items-center justify-center border-b border-border pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-28"
     >
-      {/* Parallax Floating HUD Badges */}
-      <HeroParallaxBadges containerRef={sectionRef} />
+      {/* Background Architectural Grid Matrix with Parallax */}
+      <ParallaxArchitecturalGrid speed={25} />
 
       {/* Background Gradients & Network Canvas with Parallax */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg/50 to-bg" />
       <motion.div style={{ y: bgCanvasY }} className="absolute inset-0 pointer-events-none">
-        <NetworkCanvas density={75} connectDistance={160} className="opacity-70" />
+        <NetworkCanvas density={isMobile ? 40 : 75} connectDistance={isMobile ? 120 : 160} className="opacity-60" />
       </motion.div>
-      
-      {/* Ambient Parallax Radial Glow */}
-      <motion.div
-        style={{ y: bgGlowY }}
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[650px] w-[650px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial-fade opacity-80"
-      />
-      <motion.div
-        style={{ y: bgGlowY }}
-        className="pointer-events-none absolute top-1/4 right-1/4 h-[350px] w-[350px] rounded-full bg-gold/5 blur-[100px]"
-      />
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-10"
+        className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10"
       >
         <div className="flex flex-col items-center text-center">
-          
-          {/* Live Status Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -15, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-card/80 px-4 py-1.5 shadow-[0_0_20px_rgba(201,164,92,0.1)] backdrop-blur-md"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
-            </span>
-            <span className="font-mono text-xs font-medium uppercase tracking-widest2 text-gold">
-              Digital Marketing & Web Architecture
-            </span>
-          </motion.div>
-
           {/* Main Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-5xl font-display text-balance text-5xl font-semibold leading-[1.05] tracking-tight text-text-primary sm:text-7xl lg:text-8xl"
+            className="max-w-5xl font-display text-balance text-4xl font-semibold leading-tight tracking-tight text-text-primary sm:text-7xl lg:text-8xl"
           >
             Build. Grow.{" "}
             <span className="text-gold">Scale.</span>
@@ -91,7 +77,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-7 max-w-2xl text-balance font-body text-base text-text-secondary sm:text-xl sm:leading-relaxed"
+            className="mt-6 sm:mt-7 max-w-2xl text-balance font-body text-base sm:text-xl text-text-secondary leading-relaxed"
           >
             We build high-converting websites, dominate local search, produce high-retention media,
             and deploy automated nurture funnels to turn clicks into predictable business revenue.
@@ -102,13 +88,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5"
+            className="mt-8 sm:mt-10 flex flex-col w-full sm:w-auto gap-3.5 sm:flex-row sm:items-center sm:gap-5"
           >
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(201, 164, 92, 0.4)" }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 font-body text-sm font-semibold text-bg transition-all duration-300"
+              className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-3.5 sm:py-4 font-body text-sm font-semibold text-bg transition-all duration-300 shadow-md hover:bg-gold-bright"
             >
               <span>Get Your Free Growth Audit</span>
               <ArrowUpRight
@@ -121,32 +107,33 @@ export default function Hero() {
               href="#services"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card/60 px-8 py-4 font-body text-sm font-medium text-text-primary backdrop-blur-sm transition-all duration-300 hover:border-gold/40 hover:bg-card"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-border/90 bg-card px-8 py-3.5 sm:py-4 font-body text-sm font-semibold text-text-primary transition-all duration-300 hover:border-gold/60 hover:text-gold"
             >
               Explore Our Services
             </motion.a>
           </motion.div>
 
-          {/* Trust Highlights / Value Pills */}
+          {/* Trust Highlights / Value Pills with Parallax */}
           <motion.div
+            style={{ y: pillsY }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.6 }}
-            className="mt-14 flex flex-wrap items-center justify-center gap-4 text-xs text-text-secondary"
+            className="mt-12 sm:mt-14 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 text-xs text-text-secondary"
           >
-            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-1.5">
               <Zap size={14} className="text-gold" />
               <span>High-Converting Websites</span>
             </div>
-            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-1.5">
               <ShieldCheck size={14} className="text-gold" />
               <span>Google Maps Dominance</span>
             </div>
-            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-1.5">
               <Sparkles size={14} className="text-gold" />
               <span>Automated CRM Funnels</span>
             </div>
-            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3.5 py-1.5 backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-1.5">
               <ShieldCheck size={14} className="text-gold" />
               <span>Outcomes Over Vanity</span>
             </div>
@@ -160,14 +147,14 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1 }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
+        className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 sm:gap-2"
       >
-        <span className="font-mono text-[10px] uppercase tracking-widest2 text-text-secondary/80">
+        <span className="font-mono text-xs uppercase tracking-wider text-text-secondary font-medium">
           Scroll to explore
         </span>
-        <div className="relative flex h-8 w-4.5 justify-center rounded-full border border-border/80 p-1">
+        <div className="relative flex h-7 w-4 sm:h-8 sm:w-4.5 justify-center rounded-full border border-border/80 p-1">
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
             className="h-1.5 w-1 rounded-full bg-gold"
           />

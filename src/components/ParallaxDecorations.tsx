@@ -1,13 +1,11 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export function ParallaxGlowOrb({
   className = "",
-  speed = 80,
-  size = 400,
-  color = "gold",
+  speed = 40,
 }: {
   className?: string;
   speed?: number;
@@ -15,26 +13,29 @@ export function ParallaxGlowOrb({
   color?: "gold" | "cyan" | "emerald";
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  const yRaw = useTransform(scrollYProgress, [0, 1], [-speed, speed]);
+  const effectiveSpeed = isMobile ? speed * 0.35 : speed;
+  const yRaw = useTransform(scrollYProgress, [0, 1], [-effectiveSpeed, effectiveSpeed]);
   const y = useSpring(yRaw, { stiffness: 90, damping: 25 });
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.15, 0.9]);
-
-  const colorStyles = {
-    gold: "bg-radial-fade from-gold/15 to-transparent",
-    cyan: "bg-radial-fade from-cyan-500/10 to-transparent",
-    emerald: "bg-radial-fade from-emerald-500/10 to-transparent",
-  };
 
   return (
     <div ref={ref} className={`pointer-events-none absolute ${className}`}>
       <motion.div
-        style={{ y, scale, width: size, height: size }}
-        className={`rounded-full blur-[100px] opacity-70 ${colorStyles[color]}`}
+        style={{ y }}
+        className="h-64 w-64 rounded-full bg-border/20 blur-3xl opacity-30"
       />
     </div>
   );
@@ -43,10 +44,51 @@ export function ParallaxGlowOrb({
 export function ParallaxFloatingCrosshair({
   className = "",
   label,
-  speed = 50,
+  speed = 40,
 }: {
   className?: string;
   label?: string;
+  speed?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const effectiveSpeed = isMobile ? speed * 0.3 : speed;
+  const yRaw = useTransform(scrollYProgress, [0, 1], [effectiveSpeed, -effectiveSpeed]);
+  const y = useSpring(yRaw, { stiffness: 90, damping: 25 });
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ y }}
+      className={`pointer-events-none absolute flex items-center gap-2 font-mono text-xs tracking-wider text-text-secondary/70 select-none ${className}`}
+    >
+      <div className="relative flex h-3 w-3 items-center justify-center">
+        <div className="absolute h-full w-px bg-gold/50" />
+        <div className="absolute w-full h-px bg-gold/50" />
+      </div>
+      {label && <span className="truncate max-w-[180px] sm:max-w-none">{label}</span>}
+    </motion.div>
+  );
+}
+
+export function ParallaxArchitecturalGrid({
+  className = "",
+  speed = 25,
+}: {
+  className?: string;
   speed?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -55,20 +97,16 @@ export function ParallaxFloatingCrosshair({
     offset: ["start end", "end start"],
   });
 
-  const yRaw = useTransform(scrollYProgress, [0, 1], [speed, -speed]);
-  const y = useSpring(yRaw, { stiffness: 90, damping: 25 });
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [-speed, speed]), {
+    stiffness: 90,
+    damping: 25,
+  });
 
   return (
     <motion.div
       ref={ref}
       style={{ y }}
-      className={`pointer-events-none absolute hidden sm:flex items-center gap-2 font-mono text-[10px] tracking-wider text-text-secondary/35 select-none ${className}`}
-    >
-      <div className="relative flex h-3 w-3 items-center justify-center">
-        <div className="absolute h-full w-px bg-gold/40" />
-        <div className="absolute w-full h-px bg-gold/40" />
-      </div>
-      {label && <span>{label}</span>}
-    </motion.div>
+      className={`pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(32,43,61,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(32,43,61,0.18)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-35 ${className}`}
+    />
   );
 }

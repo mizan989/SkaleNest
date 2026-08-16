@@ -2,6 +2,7 @@
 
 import Logo from "./Logo";
 import { ArrowUp, ArrowUpRight } from "lucide-react";
+import { useLenis } from "./SmoothScroll";
 
 type FooterLink = {
   label: string;
@@ -11,6 +12,7 @@ type FooterLink = {
 
 const FOOTER_LINKS: Record<string, FooterLink[]> = {
   Services: [
+    { label: "Interactive Growth Visualizer", href: "#showcase" },
     { label: "High-Converting Websites", href: "#services" },
     { label: "Local Search & Maps", href: "#services" },
     { label: "Short-Form Video & Content", href: "#services" },
@@ -33,8 +35,13 @@ const FOOTER_LINKS: Record<string, FooterLink[]> = {
 };
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const { scrollTo } = useLenis();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, target?: string) => {
+    if (!target && href.startsWith("#")) {
+      e.preventDefault();
+      scrollTo(href);
+    }
   };
 
   return (
@@ -56,7 +63,7 @@ export default function Footer() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="font-mono text-[11px] text-text-secondary">
+              <span className="font-mono text-xs text-text-secondary">
                 All systems operational &bull; Ready to scale
               </span>
             </div>
@@ -64,9 +71,9 @@ export default function Footer() {
 
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
             <div key={heading}>
-              <h4 className="font-mono text-xs uppercase tracking-widest2 text-gold">
+              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
                 {heading}
-              </h4>
+              </h3>
               <ul className="mt-5 flex flex-col gap-3">
                 {links.map((l) => (
                   <li key={l.label}>
@@ -74,6 +81,7 @@ export default function Footer() {
                       href={l.href}
                       target={l.target}
                       rel={l.target ? "noopener noreferrer" : undefined}
+                      onClick={(e) => handleLinkClick(e, l.href, l.target)}
                       className="group inline-flex items-center gap-1 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
                     >
                       <span>{l.label}</span>
@@ -97,7 +105,7 @@ export default function Footer() {
           </p>
 
           <button
-            onClick={scrollToTop}
+            onClick={() => scrollTo(0)}
             className="group flex items-center gap-2 font-mono text-xs text-text-secondary transition-colors hover:text-gold"
             aria-label="Scroll back to top"
           >

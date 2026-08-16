@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
+import { useLenis } from "./SmoothScroll";
 
 const LINKS = [
+  { label: "Showcase", href: "#showcase" },
   { label: "Services", href: "#services" },
   { label: "Method", href: "#method" },
   { label: "Industries", href: "#industries" },
@@ -16,6 +18,7 @@ const LINKS = [
 ];
 
 export default function Navbar() {
+  const { scrollTo } = useLenis();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -41,6 +44,12 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setOpen(false);
+    scrollTo(href);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -54,11 +63,16 @@ export default function Navbar() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className={`relative flex items-center justify-between gap-4 rounded-full px-4 sm:px-5 py-2 transition-all duration-500 ${
             scrolled
-              ? "border border-border/80 bg-bg/90 shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-xl"
+              ? "border border-border/80 bg-bg/90 shadow-lg backdrop-blur-xl"
               : "border border-transparent bg-transparent"
           }`}
         >
-          <a href="#top" aria-label="SkaleNest home" className="group flex shrink-0 items-center">
+          <a
+            href="#top"
+            onClick={(e) => handleNavClick(e, "#top")}
+            aria-label="SkaleNest home"
+            className="group flex shrink-0 items-center"
+          >
             <Logo />
           </a>
 
@@ -70,7 +84,8 @@ export default function Navbar() {
                 <li key={link.href} className="relative">
                   <a
                     href={link.href}
-                    className={`relative z-10 block whitespace-nowrap px-2.5 xl:px-3 py-1.5 font-body text-xs xl:text-[13px] font-medium transition-colors duration-200 ${
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`relative z-10 block whitespace-nowrap px-2.5 xl:px-3 py-1.5 font-body text-sm font-medium transition-colors duration-200 ${
                       isActive ? "text-text-primary" : "text-text-secondary hover:text-text-primary"
                     }`}
                   >
@@ -92,9 +107,10 @@ export default function Navbar() {
           <div className="hidden lg:flex shrink-0 items-center">
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.03 }}
+              onClick={(e) => handleNavClick(e, "#contact")}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-gold/40 bg-gold/[0.08] px-4 py-2 font-body text-xs font-semibold text-gold transition-all duration-300 hover:border-gold hover:bg-gold/15 hover:shadow-[0_0_20px_rgba(201,164,92,0.25)]"
+              className="group relative inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-gold/40 bg-gold/10 px-4 py-2 font-body text-xs font-semibold text-gold transition-all duration-300 hover:border-gold hover:bg-gold/20"
             >
               <span>Get Free Growth Audit</span>
               <ArrowUpRight
@@ -124,7 +140,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-4 mt-2 overflow-hidden rounded-3xl border border-border/80 bg-bg/95 p-6 shadow-2xl backdrop-blur-2xl lg:hidden"
+            className="mx-4 mt-2 overflow-hidden rounded-3xl border border-border/80 bg-bg/95 p-6 shadow-xl backdrop-blur-2xl lg:hidden"
           >
             <ul className="flex flex-col gap-2.5">
               {LINKS.map((link, i) => (
@@ -136,8 +152,8 @@ export default function Navbar() {
                 >
                   <a
                     href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
                     className="block rounded-xl px-3 py-2 font-body text-base text-text-secondary transition-colors hover:bg-card hover:text-text-primary"
-                    onClick={() => setOpen(false)}
                   >
                     {link.label}
                   </a>
@@ -152,8 +168,8 @@ export default function Navbar() {
             >
               <a
                 href="#contact"
-                onClick={() => setOpen(false)}
-                className="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gold px-5 py-3 font-body text-sm font-semibold text-bg shadow-[0_0_20px_rgba(201,164,92,0.3)] transition-transform active:scale-[0.98]"
+                onClick={(e) => handleNavClick(e, "#contact")}
+                className="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gold px-5 py-3 font-body text-sm font-semibold text-bg shadow-md transition-transform active:scale-[0.98]"
               >
                 <span>Get Free Growth Audit</span>
                 <ArrowUpRight size={16} />

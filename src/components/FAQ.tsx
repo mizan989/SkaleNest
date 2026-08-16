@@ -65,8 +65,8 @@ export default function FAQ() {
                 <div
                   className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
                     isOpen
-                      ? "border-gold/40 bg-card shadow-[0_8px_25px_rgba(0,0,0,0.3)]"
-                      : "border-border/80 bg-card/40 hover:border-gold/20 hover:bg-card/60"
+                      ? "border-gold/40 bg-card shadow-md"
+                      : "border-border/80 bg-card hover:border-gold/30"
                   }`}
                 >
                   <button
@@ -98,7 +98,7 @@ export default function FAQ() {
                         className="overflow-hidden"
                       >
                         <div className="border-t border-border/40 px-6 pb-6 pt-4">
-                          <p className="font-body text-[15px] leading-relaxed text-text-secondary">
+                          <p className="max-w-xl font-body text-[15px] leading-relaxed text-text-secondary">
                             {item.a}
                           </p>
                         </div>
@@ -112,7 +112,7 @@ export default function FAQ() {
         </div>
 
         <Reveal delay={0.4}>
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left rounded-2xl border border-border/60 bg-bg/50 p-6 backdrop-blur-sm">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left rounded-2xl border border-border/70 bg-card p-6">
             <HelpCircle size={20} className="text-gold shrink-0" />
             <p className="font-body text-sm text-text-secondary">
               Have a specific question not covered here?
@@ -121,7 +121,7 @@ export default function FAQ() {
               href="https://wa.me/917439980010"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-body text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright transition-colors"
+              className="inline-flex items-center gap-1.5 font-body text-xs font-semibold text-gold hover:text-gold-bright transition-colors"
             >
               <span>Chat with our team on WhatsApp</span>
               <MessageCircle size={14} />

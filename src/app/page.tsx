@@ -1,9 +1,9 @@
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
-import AmbientSpotlight from "@/components/AmbientSpotlight";
+import ScrollToTop from "@/components/ScrollToTop";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import ParallaxMarquee from "@/components/ParallaxMarquee";
+import ParallaxShowcase from "@/components/ParallaxShowcase";
 import Problem from "@/components/Problem";
 import Services from "@/components/Services";
 import Method from "@/components/Method";
@@ -20,10 +20,9 @@ export default function Home() {
     <SmoothScroll>
       <main className="relative selection:bg-gold selection:text-bg">
         <ScrollProgress />
-        <AmbientSpotlight />
         <Navbar />
         <Hero />
-        <ParallaxMarquee />
+        <ParallaxShowcase />
         <Problem />
         <Services />
         <Method />
@@ -34,7 +33,9 @@ export default function Home() {
         <Contact />
         <FinalCTA />
         <Footer />
+        <ScrollToTop />
       </main>
     </SmoothScroll>
   );
 }
+

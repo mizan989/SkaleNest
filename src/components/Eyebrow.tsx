@@ -12,7 +12,7 @@ export default function Eyebrow({
       }`}
     >
       <span className="h-px w-8 bg-gold" />
-      <span className="font-mono text-xs uppercase tracking-widest2 text-gold">
+      <span className="font-mono text-xs tracking-wide text-gold font-medium">
         {children}
       </span>
     </div>

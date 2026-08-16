@@ -12,12 +12,12 @@ const config: Config = {
         "bg-secondary": "#0D1422",
         card: "#111A2A",
         text: {
-          primary: "#F5F7FA",
-          secondary: "#8994A7",
+          primary: "#F8FAFC",
+          secondary: "#CBD5E1",
         },
         gold: {
           DEFAULT: "#C9A45C",
-          dim: "#a8875339",
+          dim: "rgba(201, 164, 92, 0.15)",
           bright: "#E4C083",
         },
         border: {

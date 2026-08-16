@@ -119,23 +119,28 @@ export default function Contact() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex min-h-[550px] flex-col items-center justify-center rounded-2xl border border-gold/40 bg-card/90 p-10 text-center shadow-[0_0_40px_rgba(201,164,92,0.15)] backdrop-blur-xl"
+                  className="flex min-h-[550px] flex-col items-center justify-center rounded-2xl border border-gold/40 bg-card p-10 text-center shadow-xl"
                 >
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold shadow-[0_0_20px_rgba(201,164,92,0.3)]">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold">
                     <CheckCircle2 size={32} />
                   </div>
-                  <h3 className="mt-6 font-display text-2xl font-semibold text-text-primary">
-                    Enquiry Received!
+                  <h3 className="mt-6 font-display text-2xl sm:text-3xl font-semibold text-text-primary">
+                    Audit Request Received!
                   </h3>
                   <p className="mt-3 max-w-md font-body text-sm text-text-secondary leading-relaxed">
-                    Thank you for reaching out. Our growth architects will analyze your business presence and contact you shortly.
+                    Thank you! Our growth team is analyzing your digital presence. We will send your custom audit and growth blueprint within 24 hours.
                   </p>
-                  <button
-                    onClick={() => setStatus("idle")}
-                    className="mt-8 rounded-full border border-border bg-bg px-6 py-2.5 font-body text-xs font-semibold text-text-primary transition-colors hover:border-gold/40 hover:text-gold"
+                  <p className="mt-2 font-mono text-xs text-gold">
+                    Prefer immediate assistance? WhatsApp us below.
+                  </p>
+                  <a
+                    href="https://wa.me/917439980010"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-6 py-3 font-body text-sm font-semibold text-gold hover:border-gold hover:bg-gold/20 transition-all"
                   >
-                    Submit Another Request
-                  </button>
+                    <span>Direct WhatsApp Chat</span>
+                  </a>
                 </motion.div>
               ) : (
                 <motion.div
@@ -144,7 +149,7 @@ export default function Contact() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  <SpotlightCard className="border-border/80 bg-card/70 p-8 lg:p-10 shadow-xl">
+                  <SpotlightCard className="border-border/80 bg-card p-8 lg:p-10 shadow-xl">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                       <input
                         type="hidden"
@@ -184,7 +189,7 @@ export default function Contact() {
                           name="service"
                           required
                           defaultValue=""
-                          className="w-full rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary outline-none transition-all focus:border-gold focus:shadow-[0_0_15px_rgba(201,164,92,0.15)]"
+                          className="w-full rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary outline-none transition-all focus:border-gold focus:ring-1 focus:ring-gold/50"
                         >
                           <option value="" disabled className="bg-bg text-text-secondary">
                             Select primary objective
@@ -206,7 +211,7 @@ export default function Contact() {
                           required
                           rows={3}
                           placeholder="What is your biggest bottleneck to acquiring more local customers right now?"
-                          className="w-full resize-none rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary outline-none transition-all focus:border-gold focus:shadow-[0_0_15px_rgba(201,164,92,0.15)]"
+                          className="w-full resize-none rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary outline-none transition-all focus:border-gold focus:ring-1 focus:ring-gold/50"
                         />
                       </div>
 
@@ -224,9 +229,9 @@ export default function Contact() {
                       <motion.button
                         type="submit"
                         disabled={status === "submitting"}
-                        whileHover={{ scale: 1.02, boxShadow: "0 0 25px rgba(201, 164, 92, 0.35)" }}
+                        whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="group mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 font-body text-sm font-semibold text-bg transition-all disabled:opacity-60"
+                        className="group mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 font-body text-sm font-semibold text-bg transition-all hover:bg-gold-bright disabled:opacity-60"
                       >
                         {status === "submitting" ? (
                           <span>Analyzing & Submitting...</span>
@@ -282,7 +287,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary placeholder:text-text-secondary/40 outline-none transition-all focus:border-gold focus:shadow-[0_0_15px_rgba(201,164,92,0.15)]"
+        className="w-full rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary placeholder:text-text-secondary/60 outline-none transition-all focus:border-gold focus:ring-1 focus:ring-gold/50"
       />
     </div>
   );

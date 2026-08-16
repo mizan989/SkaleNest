@@ -9,7 +9,7 @@ export default function Reveal({
   className = "",
   y = 20,
   x = 0,
-  blur = true,
+  blur = false,
   duration = 0.7,
 }: {
   children: ReactNode;
@@ -27,13 +27,11 @@ export default function Reveal({
         opacity: 0,
         y,
         x,
-        filter: blur ? "blur(6px)" : "none",
       }}
       whileInView={{
         opacity: 1,
         y: 0,
         x: 0,
-        filter: "blur(0px)",
       }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{
