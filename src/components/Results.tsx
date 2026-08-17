@@ -7,7 +7,7 @@ import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
 import ParallaxElement from "./ParallaxElement";
-import { ParallaxGlowOrb, ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
+import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 
 const COMPARISON = [
   {
@@ -49,7 +49,6 @@ export default function Results() {
     <section id="results" className="relative border-b border-border py-24 sm:py-28 lg:py-36">
       {/* Ambient Grid */}
       <ParallaxArchitecturalGrid speed={20} />
-      <ParallaxFloatingCrosshair className="top-14 left-6 sm:left-14" label="STANDARDS // VERIFIABLE_ROI" speed={30} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">

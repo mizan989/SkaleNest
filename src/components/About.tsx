@@ -6,7 +6,7 @@ import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
 import ParallaxElement from "./ParallaxElement";
 import { Quote, Code2, Target, RefreshCw, TrendingUp } from "lucide-react";
-import { ParallaxGlowOrb, ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
+import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 
 const PRINCIPLES = [
   {
@@ -46,7 +46,6 @@ export default function About() {
     <section ref={containerRef} id="about" className="relative border-b border-border bg-bg-secondary/70 py-24 sm:py-28 lg:py-36">
       {/* Ambient Grid */}
       <ParallaxArchitecturalGrid speed={20} />
-      <ParallaxFloatingCrosshair className="top-14 right-6 sm:right-16" label="FOUNDATIONAL.PRINCIPLES" speed={35} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16 items-start">

@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import { Code2, Search, Film, BarChart3, Repeat, Sparkles } from "lucide-react";
-import { ParallaxGlowOrb, ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
+import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 import ParallaxElement from "./ParallaxElement";
 
 const STEPS = [
@@ -66,10 +66,6 @@ export default function Method() {
     <section ref={sectionRef} id="method" className="relative border-b border-border bg-bg-secondary/70 py-24 sm:py-28 lg:py-36">
       {/* Ambient background architectural grid */}
       <ParallaxArchitecturalGrid speed={20} />
-
-      {/* Floating Telemetry Crosshairs */}
-      <ParallaxFloatingCrosshair className="top-14 right-6 sm:right-14" label="CLOSED_LOOP.GROWTH.ENGINE" speed={30} />
-      <ParallaxFloatingCrosshair className="bottom-16 left-6 sm:left-12" label="STAGE[01->04].SYNCHRONIZATION" speed={40} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">

@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
-import { ParallaxGlowOrb, ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
+import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 
 const SHOWCASE_TABS = [
   {
@@ -78,18 +78,6 @@ export default function ParallaxShowcase() {
     >
       {/* Background Architectural Grid */}
       <ParallaxArchitecturalGrid speed={25} />
-
-      {/* Floating Telemetry Crosshairs */}
-      <ParallaxFloatingCrosshair
-        className="top-12 left-6 sm:left-14"
-        label="SYS.ENGINE // INTERACTIVE_STACK"
-        speed={30}
-      />
-      <ParallaxFloatingCrosshair
-        className="bottom-14 right-6 sm:right-16"
-        label="LATENCY: 0.38s // REALTIME_FLOW"
-        speed={40}
-      />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         {/* Section Header */}

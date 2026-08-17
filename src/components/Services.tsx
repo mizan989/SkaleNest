@@ -6,7 +6,7 @@ import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
 import ParallaxElement from "./ParallaxElement";
-import { ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
+import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 
 const SERVICES = [
   {
@@ -86,10 +86,6 @@ export default function Services() {
     <section ref={containerRef} id="services" className="relative border-b border-border py-24 sm:py-28 lg:py-36">
       {/* Background Architectural Grid */}
       <ParallaxArchitecturalGrid speed={25} />
-
-      {/* Floating Telemetry Crosshairs */}
-      <ParallaxFloatingCrosshair className="top-16 right-6 sm:right-16" label="STACK.ARCHITECTURE // 4-PILLARS" speed={35} />
-      <ParallaxFloatingCrosshair className="bottom-14 left-6 sm:left-12" label="COMPOUNDING.REVENUE.SYSTEM" speed={45} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">

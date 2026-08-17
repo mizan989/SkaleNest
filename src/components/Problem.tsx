@@ -6,7 +6,7 @@ import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
 import ParallaxElement from "./ParallaxElement";
-import { ParallaxGlowOrb, ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
+import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 
 const PROBLEMS = [
   {
@@ -54,9 +54,6 @@ export default function Problem() {
     <section ref={containerRef} className="relative border-b border-border bg-bg-secondary/60 py-24 sm:py-28 lg:py-36">
       {/* Ambient Parallax Grid */}
       <ParallaxArchitecturalGrid speed={20} />
-      
-      <ParallaxFloatingCrosshair className="top-14 right-6 sm:right-12" label="SYS.AUDIT // GAP.ANALYSIS" speed={30} />
-      <ParallaxFloatingCrosshair className="bottom-16 left-6 sm:left-10" label="INFRASTRUCTURE.METRICS" speed={40} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <Reveal>

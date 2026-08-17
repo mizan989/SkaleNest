@@ -14,7 +14,7 @@ import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
 import ParallaxElement from "./ParallaxElement";
-import { ParallaxGlowOrb, ParallaxFloatingCrosshair, ParallaxArchitecturalGrid } from "./ParallaxDecorations";
+import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 
 const INDUSTRIES = [
   { icon: UtensilsCrossed, label: "Restaurants & Cafés", desc: "Maps ranking & viral food reels", speed: -18, mobileSpeed: -6 },
@@ -31,7 +31,6 @@ export default function Industries() {
     <section id="industries" className="relative border-b border-border bg-bg-secondary/60 py-24 sm:py-28 lg:py-36">
       {/* Background Grid */}
       <ParallaxArchitecturalGrid speed={20} />
-      <ParallaxFloatingCrosshair className="top-14 left-6 sm:left-12" label="SECTOR.SPECIALIZATION // 8-MODELS" speed={30} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
