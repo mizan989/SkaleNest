@@ -32,9 +32,9 @@ export default function StickyWhatsApp() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat with SkaleNest on WhatsApp"
-            className="flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-600 px-4 py-3 text-white shadow-2xl backdrop-blur-md transition-transform active:scale-95"
+            className="flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-600 px-5 py-3 text-white shadow-2xl backdrop-blur-md transition-transform active:scale-95 whitespace-nowrap"
           >
-            <div className="relative">
+            <div className="relative shrink-0">
               <MessageCircle size={20} className="fill-white/20 text-white" />
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />

@@ -26,7 +26,7 @@ export default function ScrollToTop() {
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => scrollTo(0)}
           aria-label="Scroll back to top"
-          className="group fixed bottom-[76px] right-4 lg:bottom-6 lg:right-6 z-40 flex h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full border border-border/90 bg-bg/90 shadow-xl backdrop-blur-xl transition-all duration-300 hover:border-gold hover:bg-card active:scale-95"
+          className="hidden lg:flex group fixed bottom-6 right-6 z-40 h-12 w-12 items-center justify-center rounded-full border border-border/90 bg-bg/90 shadow-xl backdrop-blur-xl transition-all duration-300 hover:border-gold hover:bg-card active:scale-95"
         >
           {/* Circular SVG Scroll Progress Indicator */}
           <svg className="absolute inset-0 -rotate-90 h-full w-full p-0.5" viewBox="0 0 48 48">
@@ -54,7 +54,7 @@ export default function ScrollToTop() {
 
           {/* Icon */}
           <ArrowUp
-            size={15}
+            size={16}
             className="relative z-10 text-text-secondary transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-gold"
           />
         </motion.button>
