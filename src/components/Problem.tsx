@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Globe, Eye, MessageSquareOff, TrendingDown, ArrowRight, AlertTriangle } from "lucide-react";
+import { Search, Instagram, Globe, Clock, ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
 import Eyebrow from "./Eyebrow";
 import SpotlightCard from "./SpotlightCard";
@@ -11,37 +11,37 @@ import { ParallaxArchitecturalGrid } from "./ParallaxDecorations";
 const PROBLEMS = [
   {
     n: "01",
-    icon: Globe,
-    title: "Outdated & Non-Converting Websites",
-    body: "Slow loading speeds, outdated templates, and clumsy mobile interfaces cause over 70% of prospective buyers to bounce before taking any action.",
-    accent: "Conversion Leakage",
+    icon: Search,
+    title: "Nobody finds you on Google",
+    body: "When nearby customers search for your services, they find your competitors instead of you. You miss out on high-intent buyers every day.",
+    accent: "Missing Local Search",
     speed: -20,
     mobileSpeed: -8,
   },
   {
     n: "02",
-    icon: Eye,
-    title: "Local Search Invisibility",
-    body: "Customers are searching for your services daily. If you're invisible on Google Search and Maps, nearby competitors win the customer by default.",
-    accent: "Local Visibility Void",
+    icon: Instagram,
+    title: "Social media isn't generating enquiries",
+    body: "You might be posting regularly, but likes and views aren't turning into actual direct messages, phone calls, or appointments.",
+    accent: "Zero Inbound Enquiries",
     speed: 25,
     mobileSpeed: 10,
   },
   {
     n: "03",
-    icon: MessageSquareOff,
-    title: "Weak Visual Authority & Recall",
-    body: "Your offline service might be world-class, but lacking engaging video and digital content makes it impossible for prospects to remember or trust your brand.",
-    accent: "Brand Retention Gap",
+    icon: Globe,
+    title: "Website visitors don't convert",
+    body: "People visit your website, but leave without taking action because the site is slow, confusing, or lacks clear calls to action.",
+    accent: "Lost Website Visitors",
     speed: -15,
     mobileSpeed: -6,
   },
   {
     n: "04",
-    icon: TrendingDown,
-    title: "Slow Responses & Lost Leads",
-    body: "Enquiries come in, but manual responses hours later and lack of automated follow-ups turn warm buyers into abandoned leads and lost revenue.",
-    accent: "Lead Follow-up Void",
+    icon: Clock,
+    title: "Leads aren't followed up in time",
+    body: "Enquiries come in when you're busy with operations. Delayed responses mean warm prospects quickly contact another business instead.",
+    accent: "Slow Lead Response",
     speed: 30,
     mobileSpeed: 12,
   },
@@ -51,18 +51,18 @@ export default function Problem() {
   const containerRef = useRef<HTMLElement>(null);
 
   return (
-    <section ref={containerRef} className="relative border-b border-border bg-bg-secondary/60 py-24 sm:py-28 lg:py-36">
+    <section ref={containerRef} id="problem" className="relative border-b border-border bg-bg-secondary/60 py-24 sm:py-28 lg:py-36">
       {/* Ambient Parallax Grid */}
       <ParallaxArchitecturalGrid speed={20} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <Reveal>
-          <Eyebrow>The Growth Gap</Eyebrow>
+          <Eyebrow>The Problem</Eyebrow>
           <h2 className="mt-5 max-w-2xl text-balance font-display text-3xl font-semibold leading-tight tracking-tight text-text-primary sm:text-5xl">
-            Your business is great. Your digital presence should reflect it.
+            Getting traffic but no customers?
           </h2>
           <p className="mt-4 max-w-xl text-balance font-body text-base leading-relaxed text-text-secondary">
-            Most local businesses lose up to 60% of potential revenue due to disconnected digital touchpoints.
+            Most businesses don&apos;t have a traffic problem — they have a conversion problem. Here is where most customers are lost:
           </p>
         </Reveal>
 
@@ -80,7 +80,7 @@ export default function Problem() {
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-xs font-semibold tracking-wider text-text-secondary">
-                          PHASE {p.n}
+                          CHALLENGE {p.n}
                         </span>
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 text-gold transition-transform duration-300 group-hover:scale-110">
                           <p.icon size={18} strokeWidth={1.75} />
@@ -108,15 +108,15 @@ export default function Problem() {
         <Reveal delay={0.35}>
           <div className="mt-14 sm:mt-16 relative overflow-hidden rounded-2xl border border-gold/30 bg-card/90 p-8 sm:p-10 text-center shadow-lg">
             <p className="font-display text-xl sm:text-3xl font-medium text-balance leading-relaxed sm:leading-relaxed max-w-3xl mx-auto text-text-primary">
-              SkaleNest turns these gaps into{" "}
-              <span className="text-gold font-semibold">predictable growth infrastructure.</span>
+              SkaleNest fixes these bottlenecks so your online presence{" "}
+              <span className="text-gold font-semibold">consistently brings paying customers.</span>
             </p>
             <div className="mt-6 flex justify-center">
               <a
                 href="#services"
                 className="group inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-gold transition-colors hover:text-gold-bright"
               >
-                <span>Discover our 4-pillar growth stack</span>
+                <span>See how we solve this</span>
                 <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
               </a>
             </div>

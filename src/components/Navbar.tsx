@@ -7,13 +7,12 @@ import Logo from "./Logo";
 import { useLenis } from "./SmoothScroll";
 
 const LINKS = [
-  { label: "Showcase", href: "#showcase" },
   { label: "Services", href: "#services" },
-  { label: "Method", href: "#method" },
-  { label: "Industries", href: "#industries" },
+  { label: "Work", href: "#work" },
   { label: "Results", href: "#results" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Pricing", href: "#pricing" },
   { label: "About", href: "#about" },
-  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -24,18 +23,26 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
+    let ticking = false;
+
     const onScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 25);
 
-      const sections = LINKS.map((l) => l.href.substring(1));
-      const scrollPos = window.scrollY + 200;
+          const sections = LINKS.map((l) => l.href.substring(1));
+          const scrollPos = window.scrollY + 240;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sections[i]);
-          break;
-        }
+          for (let i = sections.length - 1; i >= 0; i--) {
+            const el = document.getElementById(sections[i]);
+            if (el && el.offsetTop <= scrollPos) {
+              setActiveSection(sections[i]);
+              break;
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -51,20 +58,24 @@ export default function Navbar() {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "py-2.5" : "py-4 sm:py-5"
+    <motion.header
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "py-2 sm:py-2.5" : "py-4 sm:py-5"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <motion.nav
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className={`relative flex items-center justify-between gap-4 rounded-full px-4 sm:px-5 py-2 transition-all duration-500 ${
+          animate={{
+            scale: scrolled ? 0.995 : 1,
+          }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className={`relative flex items-center justify-between gap-3 sm:gap-4 rounded-full px-4 sm:px-5 py-2 transition-all duration-300 ${
             scrolled
-              ? "border border-border/80 bg-bg/90 shadow-lg backdrop-blur-xl"
-              : "border border-transparent bg-transparent"
+              ? "border border-gold/30 bg-bg/90 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6),0_0_15px_rgba(201,164,92,0.12)] backdrop-blur-xl"
+              : "border border-border/60 bg-bg/70 backdrop-blur-md"
           }`}
         >
           <a
@@ -81,43 +92,36 @@ export default function Navbar() {
             {LINKS.map((link) => {
               const isActive = activeSection === link.href.substring(1);
               return (
-                <li key={link.href} className="relative">
+                <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className={`relative z-10 block whitespace-nowrap px-2.5 xl:px-3 py-1.5 font-body text-sm font-medium transition-colors duration-200 ${
-                      isActive ? "text-text-primary" : "text-text-secondary hover:text-text-primary"
+                    className={`block whitespace-nowrap rounded-full px-3 py-1.5 font-body text-xs xl:text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? "bg-gold/15 text-gold border border-gold/35 shadow-sm"
+                        : "text-text-secondary hover:text-text-primary hover:bg-card/60"
                     }`}
                   >
                     {link.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-pill"
-                        className="absolute inset-0 -z-10 rounded-full border border-gold/30 bg-gold/[0.08]"
-                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                      />
-                    )}
                   </a>
                 </li>
               );
             })}
           </ul>
 
-          {/* Desktop CTA */}
+          {/* Desktop CTA Button with proper sizing & no overflow */}
           <div className="hidden lg:flex shrink-0 items-center">
-            <motion.a
+            <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-gold/40 bg-gold/10 px-4 py-2 font-body text-xs font-semibold text-gold transition-all duration-300 hover:border-gold hover:bg-gold/20"
+              className="group relative inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gold px-4 sm:px-5 py-2 font-body text-xs font-semibold text-bg transition-all duration-200 hover:bg-gold-bright shadow-md active:scale-[0.98]"
             >
               <span>Get Free Growth Audit</span>
               <ArrowUpRight
                 size={14}
-                className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </motion.a>
+            </a>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -139,17 +143,12 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="mx-4 mt-2 overflow-hidden rounded-3xl border border-border/80 bg-bg/95 p-6 shadow-xl backdrop-blur-2xl lg:hidden"
           >
-            <ul className="flex flex-col gap-2.5">
-              {LINKS.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.03 }}
-                >
+            <ul className="flex flex-col gap-2">
+              {LINKS.map((link) => (
+                <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
@@ -157,15 +156,10 @@ export default function Navbar() {
                   >
                     {link.label}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 }}
-              className="mt-5 border-t border-border pt-5"
-            >
+            <div className="mt-5 border-t border-border pt-5">
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, "#contact")}
@@ -174,10 +168,10 @@ export default function Navbar() {
                 <span>Get Free Growth Audit</span>
                 <ArrowUpRight size={16} />
               </a>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
