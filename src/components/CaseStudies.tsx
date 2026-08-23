@@ -29,7 +29,6 @@ const CASE_STUDIES = [
     solution: "Fast mobile website + Local Google Maps #1 optimization + Instagram food content + Direct WhatsApp table reservation funnel.",
     results: [
       { label: "Direct Bookings", value: "+140%" },
-      { label: "Google Maps Rank", value: "Top 3 (#1)" },
       { label: "Timeframe", value: "60 Days" },
     ],
     speed: 25,
@@ -125,7 +124,7 @@ export default function CaseStudies() {
                         <TrendingUp size={14} />
                         <span>Verifiable Result</span>
                       </div>
-                      <div className="grid grid-cols-3 gap-2 text-center">
+                      <div className="grid grid-flow-col auto-cols-fr gap-2 text-center">
                         {c.results.map((r) => (
                           <div key={r.label} className="flex flex-col">
                             <span className="font-display text-lg sm:text-xl font-bold text-text-primary">

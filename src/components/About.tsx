@@ -58,11 +58,6 @@ export default function About() {
                     &ldquo;We started SkaleNest with one goal: helping businesses turn their online presence into something that actually brings customers.&rdquo;
                   </p>
                 </div>
-
-                <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-4 text-xs font-mono text-text-secondary">
-                  <span>Direct Founder Involvement</span>
-                  <span className="text-emerald-400 font-semibold">100% Focused on ROI</span>
-                </div>
               </SpotlightCard>
             </div>
           </Reveal>

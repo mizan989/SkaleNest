@@ -69,17 +69,12 @@ export default function Work() {
       <ParallaxArchitecturalGrid speed={20} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
           <Reveal>
             <Eyebrow>Our Portfolio</Eyebrow>
             <h2 className="mt-5 max-w-2xl text-balance font-display text-3xl font-semibold leading-tight tracking-tight text-text-primary sm:text-5xl">
               Work That Speaks For Itself
             </h2>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="max-w-md font-body text-base text-text-secondary leading-relaxed">
-              Every website, campaign, and funnel we design is built specifically to turn attention into paying customers.
-            </p>
           </Reveal>
         </div>
 

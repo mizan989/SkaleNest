@@ -15,7 +15,6 @@ import Testimonials from "@/components/Testimonials";
 import About from "@/components/About";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
-import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -36,7 +35,6 @@ export default function Home() {
         <About />
         <FAQ />
         <Contact />
-        <FinalCTA />
         <Footer />
         <StickyWhatsApp />
         <ScrollToTop />

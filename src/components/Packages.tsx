@@ -46,7 +46,7 @@ const PACKAGES = [
     name: "SCALE",
     tagline: "For businesses ready to grow aggressively.",
     featured: false,
-    badge: "Complete Machine",
+    badge: "",
     features: [
       "Full Digital Marketing & Brand Funnels",
       "Multi-Platform Paid Advertising (Meta + Google)",
@@ -149,18 +149,6 @@ export default function Packages() {
             </Reveal>
           ))}
         </div>
-
-        {/* Custom Scope Note */}
-        <Reveal delay={0.35}>
-          <div className="mt-12 text-center">
-            <p className="font-body text-xs text-text-secondary">
-              Need a custom scope or have specific feature requirements?{" "}
-              <a href="#contact" className="text-gold font-medium hover:underline">
-                Let&apos;s build a custom plan for your business &rarr;
-              </a>
-            </p>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

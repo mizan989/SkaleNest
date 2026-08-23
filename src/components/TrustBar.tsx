@@ -1,7 +1,6 @@
 "use client";
 
-import { Star, ShieldCheck, CheckCircle2, TrendingUp } from "lucide-react";
-import Reveal from "./Reveal";
+import { Star, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 export default function TrustBar() {
   return (
@@ -41,11 +40,6 @@ export default function TrustBar() {
             <div className="hidden sm:flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-2 text-xs font-mono text-text-secondary">
               <CheckCircle2 size={14} className="text-emerald-400" />
               <span>Proven Local Playbooks</span>
-            </div>
-
-            <div className="flex items-center gap-2 rounded-full border border-border/80 bg-card px-3.5 py-2 text-xs font-mono text-text-secondary">
-              <TrendingUp size={14} className="text-gold" />
-              <span>Conversion-First Approach</span>
             </div>
           </div>
         </div>
