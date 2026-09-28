@@ -1,4 +1,4 @@
-# SkaleNest — Website (skalenest.vercel.app)
+# SkaleNest — Website
 
 "Where Businesses Grow." Digital Growth Infrastructure for Modern Local Businesses.
 
