@@ -1,17 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import { useLenis } from "./SmoothScroll";
 
-const LINKS = [
+const NAV_LINKS = [
   { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Results", href: "#results" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Process", href: "#process" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
@@ -22,16 +19,25 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      setOpen(false);
+      scrollTo(href);
+    },
+    [scrollTo]
+  );
+
   useEffect(() => {
     let ticking = false;
 
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 25);
+          setScrolled(window.scrollY > 20);
 
-          const sections = LINKS.map((l) => l.href.substring(1));
-          const scrollPos = window.scrollY + 240;
+          const sections = NAV_LINKS.map((l) => l.href.substring(1));
+          const scrollPos = window.scrollY + 120;
 
           for (let i = sections.length - 1; i >= 0; i--) {
             const el = document.getElementById(sections[i]);
@@ -51,55 +57,54 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setOpen(false);
-    scrollTo(href);
-  };
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
 
   return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-2 sm:py-2.5" : "py-4 sm:py-5"
+        scrolled ? "py-2 sm:py-2.5" : "py-3.5 sm:py-4"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-        <motion.nav
-          animate={{
-            scale: scrolled ? 0.995 : 1,
-          }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className={`relative flex items-center justify-between gap-3 sm:gap-4 rounded-full px-4 sm:px-5 py-2 transition-all duration-300 ${
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <nav
+          className={`flex items-center justify-between gap-4 rounded-full px-4 sm:px-5 py-2.5 transition-all duration-300 ${
             scrolled
-              ? "border border-gold/30 bg-bg/90 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6),0_0_15px_rgba(201,164,92,0.12)] backdrop-blur-xl"
-              : "border border-border/60 bg-bg/70 backdrop-blur-md"
+              ? "border border-[#E5E3DC] bg-white/90 shadow-soft backdrop-blur-md"
+              : "border border-[#E5E3DC]/80 bg-[#F7F6F2]/80 backdrop-blur-md"
           }`}
+          aria-label="Main Navigation"
         >
           <a
             href="#top"
             onClick={(e) => handleNavClick(e, "#top")}
             aria-label="SkaleNest home"
-            className="group flex shrink-0 items-center"
+            className="flex shrink-0 items-center focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
           >
-            <Logo />
+            <Logo size={36} />
           </a>
 
-          {/* Desktop Nav Links */}
-          <ul className="hidden items-center gap-0.5 xl:gap-1.5 lg:flex">
-            {LINKS.map((link) => {
+          {/* Desktop Navigation Links */}
+          <ul className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.href.substring(1);
               return (
                 <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className={`block whitespace-nowrap rounded-full px-3 py-1.5 font-body text-xs xl:text-sm font-medium transition-all duration-200 ${
+                    className={`block rounded-full px-3.5 py-1.5 font-body text-sm font-medium transition-colors ${
                       isActive
-                        ? "bg-gold/15 text-gold border border-gold/35 shadow-sm"
-                        : "text-text-secondary hover:text-text-primary hover:bg-card/60"
+                        ? "bg-[#C9A45C]/12 text-[#171715] font-semibold"
+                        : "text-[#6F706B] hover:text-[#171715] hover:bg-black/[0.03]"
                     }`}
                   >
                     {link.label}
@@ -109,69 +114,69 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop CTA Button with proper sizing & no overflow */}
-          <div className="hidden lg:flex shrink-0 items-center">
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center">
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
-              className="group relative inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gold px-4 sm:px-5 py-2 font-body text-xs font-semibold text-bg transition-all duration-200 hover:bg-gold-bright shadow-md active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#171715] px-4 sm:px-5 py-2 font-body text-xs sm:text-sm font-semibold text-white transition-all hover:bg-[#C9A45C] hover:text-[#171715] shadow-sm active:scale-[0.98]"
             >
-              <span>Get Free Growth Audit</span>
-              <ArrowUpRight
-                size={14}
-                className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
+              <span>Get in Touch</span>
+              <ArrowUpRight size={15} />
             </a>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Button */}
           <button
-            className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/60 text-text-primary transition-colors hover:border-gold/40 lg:hidden"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Close menu" : "Open menu"}
+            type="button"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E5E3DC] bg-white text-[#171715] transition-colors hover:border-[#C9A45C] md:hidden focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
+            onClick={() => setOpen((prev) => !prev)}
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
+            aria-controls="mobile-menu"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
-        </motion.nav>
+        </nav>
       </div>
 
-      {/* Mobile Drawer with AnimatePresence */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-4 mt-2 overflow-hidden rounded-3xl border border-border/80 bg-bg/95 p-6 shadow-xl backdrop-blur-2xl lg:hidden"
+            className="mx-4 mt-2 overflow-hidden rounded-2xl border border-[#E5E3DC] bg-white p-5 shadow-card md:hidden"
           >
-            <ul className="flex flex-col gap-2">
-              {LINKS.map((link) => (
+            <ul className="flex flex-col gap-1">
+              {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="block rounded-xl px-3 py-2 font-body text-base text-text-secondary transition-colors hover:bg-card hover:text-text-primary"
+                    className="block rounded-xl px-3 py-2.5 font-body text-base font-medium text-[#171715] hover:bg-[#F7F6F2] transition-colors"
                   >
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <div className="mt-5 border-t border-border pt-5">
+            <div className="mt-4 border-t border-[#E5E3DC] pt-4">
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, "#contact")}
-                className="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gold px-5 py-3 font-body text-sm font-semibold text-bg shadow-md transition-transform active:scale-[0.98]"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-[#171715] px-5 py-3 font-body text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#C9A45C] hover:text-[#171715]"
               >
-                <span>Get Free Growth Audit</span>
+                <span>Get in Touch</span>
                 <ArrowUpRight size={16} />
               </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

@@ -1,53 +1,67 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
+const instrumentSans = localFont({
+  src: [
+    {
+      path: "../../public/fonts/InstrumentSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/InstrumentSans-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-sans",
   display: "swap",
 });
 
-const body = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const geistMono = localFont({
+  src: [
+    {
+      path: "../../public/fonts/GeistMono-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
   variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "SkaleNest — Digital Marketing & High-Converting Website Creation",
+  metadataBase: new URL("https://skalenest.com"),
+  title: "SkaleNest — Website Design, Development & Digital Marketing",
   description:
-    "We build high-converting websites, dominate Google Maps local SEO, produce high-retention video content, and automate WhatsApp CRM funnels for ambitious businesses.",
+    "SkaleNest designs, develops, and deploys high-performance websites and creates strategic digital marketing campaigns for growing businesses.",
   keywords: [
-    "website creation for business",
-    "custom web design agency",
-    "digital marketing agency",
-    "high-converting websites",
-    "local SEO agency",
-    "Google Business Profile optimization",
-    "WhatsApp marketing automation",
-    "short-form video production",
-    "conversion rate optimization",
+    "SkaleNest",
+    "website design",
+    "web development",
+    "digital marketing",
+    "frontend development",
+    "custom websites",
   ],
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/logo1.png",
+    shortcut: "/logo1.png",
+    apple: "/logo1.png",
   },
   openGraph: {
-    title: "SkaleNest — Digital Marketing & Website Creation for Businesses",
+    title: "SkaleNest — Website Design, Development & Digital Marketing",
     description:
-      "High-converting website design, local search dominance, visual content, and automated CRM growth systems.",
+      "Modern website design, full-stack development, and digital marketing solutions.",
     type: "website",
+    images: [
+      {
+        url: "/logo1.png",
+        width: 1280,
+        height: 1280,
+        alt: "SkaleNest Logo",
+      },
+    ],
   },
 };
 
@@ -57,10 +71,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="font-body bg-bg text-text-primary antialiased">
+    <html lang="en" className={`${instrumentSans.variable} ${geistMono.variable}`}>
+      <body className="font-sans bg-[#F7F6F2] text-[#171715] antialiased selection:bg-[#C9A45C]/20 selection:text-[#171715]">
         {children}
       </body>
     </html>
   );
 }
+

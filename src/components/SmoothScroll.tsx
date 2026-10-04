@@ -44,40 +44,55 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   });
 
   const scrollTo = useCallback((target: string | number | HTMLElement, options?: Record<string, unknown>) => {
-    if (!lenisRef.current) {
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+    const defaultOffset = isDesktop ? 0 : -72;
+
+    if (!lenisRef.current || prefersReducedMotion) {
       if (typeof target === "number") {
-        window.scrollTo({ top: target, behavior: "smooth" });
+        window.scrollTo({ top: target, behavior: prefersReducedMotion ? "auto" : "smooth" });
       } else if (typeof target === "string") {
         const el = document.querySelector(target);
-        el?.scrollIntoView({ behavior: "smooth" });
+        if (el) {
+          const navOffset = isDesktop ? 0 : 72;
+          const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition - navOffset,
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          });
+        }
       } else if (target instanceof HTMLElement) {
-        target.scrollIntoView({ behavior: "smooth" });
+        const navOffset = isDesktop ? 0 : 72;
+        const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - navOffset,
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
       }
       return;
     }
 
     lenisRef.current.scrollTo(target, {
-      offset: -75,
-      duration: 1.3,
+      offset: defaultOffset,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       ...options,
     });
   }, []);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    // Check reduced motion preference
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
+      return;
+    }
 
-    if (prefersReducedMotion) return;
-
-    // Initialize ultra-smooth Studio Freight Lenis v1.3 engine
+    // Initialize Lenis without touch hijacking to preserve native mobile gesture fidelity
     const lenis = new Lenis({
-      lerp: 0.085, // Silky inertia glide
-      wheelMultiplier: 1.0, // Natural 1:1 wheel response
-      touchMultiplier: 1.3, // Fluid touch response
-      syncTouch: true, // Seamless touch gesture tracking
-      syncTouchLerp: 0.08,
+      lerp: 0.1,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.0,
+      syncTouch: false,
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
@@ -86,7 +101,6 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
     lenisRef.current = lenis;
 
-    // Listen to real-time scroll velocity and progress
     lenis.on("scroll", (e: { scroll: number; limit: number; velocity: number; direction: number; progress: number }) => {
       setScrollState({
         scroll: e.scroll,
@@ -97,7 +111,6 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       });
     });
 
-    // High-precision RAF loop
     let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
@@ -106,7 +119,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
     rafId = requestAnimationFrame(raf);
 
-    // Global anchor links handler for butter-smooth scrolling to sections
+    // Global anchor links handler
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       const anchor = target?.closest("a");
