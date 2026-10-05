@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://skalenest.com/sitemap.xml",
+    sitemap: "https://skalenest.vercel.app/sitemap.xml",
   };
 }

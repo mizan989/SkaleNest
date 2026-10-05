@@ -107,7 +107,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="rounded-xl border border-[#E5E3DC] bg-[#F7F6F2] p-4 text-xs sm:text-sm font-mono space-y-1">
                 <p><span className="text-[#171715] font-bold">Brand:</span> SkaleNest</p>
-                <p><span className="text-[#171715] font-bold">Website:</span> https://skalenest.com</p>
+                <p><span className="text-[#171715] font-bold">Website:</span> https://skalenest.vercel.app</p>
                 <p><span className="text-[#171715] font-bold">Email:</span> skalenest@gmail.com</p>
                 <p><span className="text-[#171715] font-bold">WhatsApp:</span> +91 74399 80010</p>
               </div>

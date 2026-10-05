@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://skalenest.com";
+  const baseUrl = "https://skalenest.vercel.app";
   const now = new Date();
 
   return [

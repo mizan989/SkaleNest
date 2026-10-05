@@ -30,24 +30,9 @@ const FAQ_DATA: FAQItem[] = [
       "Yes. Our digital marketing services include market research, digital positioning strategy, audience targeting, multi-channel campaign planning, and content strategy aligned with your business goals.",
   },
   {
-    question: "Can I work with you if I only need a website?",
-    answer:
-      "Certainly. While our design and marketing capabilities complement each other, many clients partner with us solely for website design and development, or specifically for digital marketing. You only pay for what your business requires.",
-  },
-  {
-    question: "How does the project process work?",
-    answer:
-      "We follow a disciplined four-stage methodology: 1) Understand (discovery & requirements), 2) Plan (technical scope & timelines), 3) Create (design & engineering execution), and 4) Review & Handover (quality checks, revisions, and launch).",
-  },
-  {
     question: "How do I get started?",
     answer:
-      "The easiest way is to fill out our contact form below with a brief summary of your project, or contact us directly via email at skalenest@gmail.com or WhatsApp (+91 74399 80010). We will review your goals and schedule a discussion.",
-  },
-  {
-    question: "What happens after I submit an enquiry?",
-    answer:
-      "We personally review your submission and respond promptly with practical recommendations, preliminary scoping considerations, and clear next steps—without high-pressure sales tactics.",
+      "The easiest way is to fill out our contact form below with a brief summary of your project, or reach out directly via email at skalenest@gmail.com or WhatsApp (+91 74399 80010). We will review your goals and schedule an initial discussion.",
   },
 ];
 
@@ -61,18 +46,28 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-28 bg-[#F7F6F2]"
+      className="relative flex flex-col justify-center border-t border-[#262624] bg-[#141412] text-[#F7F6F2] py-20 sm:py-24 lg:py-28 overflow-hidden"
     >
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 w-full">
+      {/* Subtle top & bottom gold accent hairlines matching Process section */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A45C]/35 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A45C]/35 to-transparent pointer-events-none" />
+
+      {/* Soft ambient warm radial glow in backdrop */}
+      <div
+        className="absolute rounded-full filter blur-[120px] pointer-events-none w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#C9A45C]/[0.06]"
+        aria-hidden="true"
+      />
+
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 w-full relative z-10">
         {/* Section Header */}
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#E5E3DC] bg-white px-3 py-1 text-xs font-mono text-[#6F706B] shadow-soft mb-3 sm:mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#2E2E2A] bg-[#1C1C19] px-3 py-1 text-xs font-mono text-[#C9A45C] mb-3 sm:mb-4">
             <span>Frequently Asked Questions</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#171715]">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#F7F6F2]">
             Common Questions
           </h2>
-          <p className="mt-3 sm:mt-4 font-body text-base sm:text-lg text-[#6F706B] leading-relaxed">
+          <p className="mt-3 sm:mt-4 font-body text-base sm:text-lg text-[#9C9B94] leading-relaxed">
             Clear, honest answers about how we work, what we build, and how to get started on your project.
           </p>
         </div>
@@ -87,7 +82,7 @@ export default function FAQ() {
             return (
               <div
                 key={index}
-                className="overflow-hidden rounded-2xl border border-[#E5E3DC] bg-white shadow-soft transition-colors hover:border-[#C9A45C]/50"
+                className="overflow-hidden rounded-2xl border border-[#262624] bg-[#1A1A17] transition-all duration-300 hover:border-[#C9A45C]/50"
               >
                 <button
                   type="button"
@@ -97,12 +92,12 @@ export default function FAQ() {
                   onClick={() => toggleItem(index)}
                   className="flex w-full items-center justify-between gap-4 p-5 sm:p-6 text-left transition-colors focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
                 >
-                  <span className="font-display text-base sm:text-lg font-semibold text-[#171715]">
+                  <span className="font-display text-base sm:text-lg font-semibold text-[#F7F6F2]">
                     {item.question}
                   </span>
                   <div
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F7F6F2] text-[#6F706B] transition-transform duration-200 ${
-                      isOpen ? "rotate-180 text-[#171715] bg-[#C9A45C]/15" : ""
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#262624] text-[#9C9B94] transition-all duration-200 ${
+                      isOpen ? "rotate-180 text-[#C9A45C] bg-[#C9A45C]/20" : ""
                     }`}
                   >
                     <ChevronDown size={16} />
@@ -114,7 +109,7 @@ export default function FAQ() {
                     id={answerId}
                     role="region"
                     aria-labelledby={questionId}
-                    className="border-t border-[#E5E3DC]/60 px-5 pt-3 pb-5 sm:px-6 sm:pb-6 font-body text-sm sm:text-base text-[#6F706B] leading-relaxed"
+                    className="border-t border-[#262624] px-5 pt-3 pb-5 sm:px-6 sm:pb-6 font-body text-sm sm:text-base text-[#9C9B94] leading-relaxed"
                   >
                     <p>{item.answer}</p>
                   </div>

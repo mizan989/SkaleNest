@@ -32,7 +32,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skalenest.com"),
+  metadataBase: new URL("https://skalenest.vercel.app"),
   alternates: {
     canonical: "/",
   },
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     description:
       "Modern website design, full-stack development, and digital marketing solutions.",
     type: "website",
-    url: "https://skalenest.com",
+    url: "https://skalenest.vercel.app",
     siteName: "SkaleNest",
     images: [
       {
