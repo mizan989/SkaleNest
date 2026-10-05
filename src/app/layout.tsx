@@ -33,6 +33,9 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://skalenest.com"),
+  alternates: {
+    canonical: "/",
+  },
   title: "SkaleNest — Website Design, Development & Digital Marketing",
   description:
     "SkaleNest designs, develops, and deploys high-performance websites and creates strategic digital marketing campaigns for growing businesses.",
@@ -45,8 +48,11 @@ export const metadata: Metadata = {
     "custom websites",
   ],
   icons: {
-    icon: "/logo1.png",
-    shortcut: "/logo1.png",
+    icon: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: "/logo1.png", type: "image/png" },
+    ],
+    shortcut: "/logo.svg",
     apple: "/logo1.png",
   },
   openGraph: {
@@ -54,6 +60,8 @@ export const metadata: Metadata = {
     description:
       "Modern website design, full-stack development, and digital marketing solutions.",
     type: "website",
+    url: "https://skalenest.com",
+    siteName: "SkaleNest",
     images: [
       {
         url: "/logo1.png",
@@ -62,6 +70,13 @@ export const metadata: Metadata = {
         alt: "SkaleNest Logo",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SkaleNest — Website Design, Development & Digital Marketing",
+    description:
+      "Modern website design, full-stack development, and digital marketing solutions.",
+    images: ["/logo1.png"],
   },
 };
 

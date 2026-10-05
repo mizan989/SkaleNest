@@ -63,6 +63,15 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  href="#faq"
+                  onClick={(e) => handleNavClick(e, "#faq")}
+                  className="transition-colors hover:text-[#F7F6F2]"
+                >
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a
                   href="#contact"
                   onClick={(e) => handleNavClick(e, "#contact")}
                   className="transition-colors hover:text-[#F7F6F2]"

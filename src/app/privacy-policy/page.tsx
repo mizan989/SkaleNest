@@ -97,21 +97,19 @@ export default function PrivacyPolicyPage() {
               </p>
             </section>
 
-            {/* Section 5 - Owner Confirmation Details */}
+            {/* Section 5 - Entity & Contact Information */}
             <section className="space-y-3 border-t border-[#E5E3DC] pt-6">
               <h2 className="font-display text-xl font-bold text-[#171715]">
                 5. Contact & Entity Information
               </h2>
               <p>
-                For any privacy questions or requests, you can contact:
+                For any privacy questions, data requests, or information disclosures, please contact:
               </p>
               <div className="rounded-xl border border-[#E5E3DC] bg-[#F7F6F2] p-4 text-xs sm:text-sm font-mono space-y-1">
                 <p><span className="text-[#171715] font-bold">Brand:</span> SkaleNest</p>
+                <p><span className="text-[#171715] font-bold">Website:</span> https://skalenest.com</p>
                 <p><span className="text-[#171715] font-bold">Email:</span> skalenest@gmail.com</p>
                 <p><span className="text-[#171715] font-bold">WhatsApp:</span> +91 74399 80010</p>
-                <p className="text-[#8C8D87] text-xs pt-2">
-                  [TODO: Owner confirmation required: Registered business entity name, official business registration number, and formal operating address if applicable.]
-                </p>
               </div>
             </section>
           </div>

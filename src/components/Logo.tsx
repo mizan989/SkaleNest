@@ -18,7 +18,7 @@ export default function Logo({
         style={{ width: size, height: size }}
       >
         <Image
-          src="/logo1.png"
+          src="/logo.svg"
           alt="SkaleNest emblem"
           width={size}
           height={size}

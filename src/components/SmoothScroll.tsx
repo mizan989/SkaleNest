@@ -35,6 +35,7 @@ export const useLenis = () => useContext(LenisContext);
 
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
   const [scrollState, setScrollState] = useState<ScrollState>({
     scroll: 0,
     limit: 0,
@@ -44,35 +45,37 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   });
 
   const scrollTo = useCallback((target: string | number | HTMLElement, options?: Record<string, unknown>) => {
-    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
-    const defaultOffset = isDesktop ? 0 : -72;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const defaultOffset = -76;
 
     if (!lenisRef.current || prefersReducedMotion) {
       if (typeof target === "number") {
         window.scrollTo({ top: target, behavior: prefersReducedMotion ? "auto" : "smooth" });
       } else if (typeof target === "string") {
-        const el = document.querySelector(target);
+        // Strip query string if present (e.g. #contact?service=...)
+        const selector = target.split("?")[0];
+        const el = document.querySelector(selector);
         if (el) {
-          const navOffset = isDesktop ? 0 : 72;
           const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
           window.scrollTo({
-            top: elementPosition - navOffset,
+            top: elementPosition + defaultOffset,
             behavior: prefersReducedMotion ? "auto" : "smooth",
           });
         }
       } else if (target instanceof HTMLElement) {
-        const navOffset = isDesktop ? 0 : 72;
         const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
         window.scrollTo({
-          top: elementPosition - navOffset,
+          top: elementPosition + defaultOffset,
           behavior: prefersReducedMotion ? "auto" : "smooth",
         });
       }
       return;
     }
 
-    lenisRef.current.scrollTo(target, {
+    const cleanTarget = typeof target === "string" ? target.split("?")[0] : target;
+    lenisRef.current.scrollTo(cleanTarget, {
       offset: defaultOffset,
       duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -100,6 +103,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     });
 
     lenisRef.current = lenis;
+    setLenisInstance(lenis);
 
     lenis.on("scroll", (e: { scroll: number; limit: number; velocity: number; direction: number; progress: number }) => {
       setScrollState({
@@ -127,7 +131,8 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
       const href = anchor.getAttribute("href");
       if (href && href.startsWith("#") && href.length > 1) {
-        const targetElement = document.querySelector(href);
+        const selector = href.split("?")[0];
+        const targetElement = document.querySelector(selector);
         if (targetElement) {
           e.preventDefault();
           scrollTo(targetElement as HTMLElement);
@@ -145,11 +150,12 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
       lenisRef.current = null;
+      setLenisInstance(null);
     };
   }, [scrollTo]);
 
   return (
-    <LenisContext.Provider value={{ lenis: lenisRef.current, scrollTo, scrollState }}>
+    <LenisContext.Provider value={{ lenis: lenisInstance, scrollTo, scrollState }}>
       {children}
     </LenisContext.Provider>
   );

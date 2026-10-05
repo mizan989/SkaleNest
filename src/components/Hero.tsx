@@ -35,7 +35,7 @@ export default function Hero() {
           className="mx-auto mb-4 sm:mb-5 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-[#E5E3DC] bg-white p-2.5 sm:p-3 shadow-card"
         >
           <Image
-            src="/logo1.png"
+            src="/logo.svg"
             alt="SkaleNest emblem"
             width={60}
             height={60}

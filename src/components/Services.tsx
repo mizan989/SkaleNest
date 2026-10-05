@@ -37,15 +37,25 @@ const SERVICES_DATA = [
 export default function Services() {
   const { scrollTo } = useLenis();
 
-  const handleInquire = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleInquire = (serviceNeed: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("skalenest:select-service", { detail: serviceNeed })
+      );
+      window.history.replaceState(
+        null,
+        "",
+        `#contact?service=${encodeURIComponent(serviceNeed)}`
+      );
+    }
     scrollTo("#contact");
   };
 
   return (
     <section
       id="services"
-      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-0 lg:min-h-screen lg:min-h-[100dvh]"
+      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-0 lg:min-h-screen lg:min-h-[100dvh] scroll-mt-20 sm:scroll-mt-24"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 w-full my-auto lg:py-16">
         {/* Section Header */}
@@ -110,8 +120,8 @@ export default function Services() {
               <div className="mt-6 pt-5 border-t border-[#E5E3DC]">
                 <a
                   href="#contact"
-                  onClick={handleInquire}
-                  className="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-[#171715] transition-colors hover:text-[#C9A45C] group/link"
+                  onClick={handleInquire(service.inquiryNeed)}
+                  className="inline-flex items-center gap-1.5 font-body text-sm font-semibold text-[#171715] transition-colors hover:text-[#C9A45C] group/link focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
                 >
                   <span>Discuss {service.title}</span>
                   <ArrowUpRight

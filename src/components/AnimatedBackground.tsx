@@ -38,10 +38,12 @@ export default function AnimatedBackground({
 
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let nodes: Node[] = [];
-    let animationFrameId: number;
+    let animationFrameId = 0;
     let mousePos: { x: number; y: number } | null = null;
+    let isVisible = true;
+    let isRunning = false;
 
     function resize() {
       if (!canvas || !container) return;
@@ -63,13 +65,12 @@ export default function AnimatedBackground({
 
     function initNodes() {
       if (width <= 0 || height <= 0) return;
-      // Balanced density: visible constellation networks without visual crowding
-      const density = variant === "hero" ? 46 : 34;
+      // Balanced density: visible constellation networks without visual crowding or CPU waste
+      const maxDensity = variant === "hero" ? 38 : 28;
       const count = Math.min(
-        Math.max(Math.round((width * height) / 18000), 25),
-        density
+        Math.max(Math.round((width * height) / 22000), 20),
+        maxDensity
       );
-      // Graceful, floating drift
       const speed = variant === "hero" ? 0.28 : 0.22;
 
       nodes = Array.from({ length: count }).map(() => ({
@@ -84,16 +85,18 @@ export default function AnimatedBackground({
       }));
     }
 
-    const connectDistance = variant === "hero" ? 145 : 130;
-    const mouseRadius = 165;
+    const connectDistance = variant === "hero" ? 140 : 125;
+    const connectDistSq = connectDistance * connectDistance;
+    const mouseRadius = 160;
 
-    function draw() {
+    function renderFrame() {
       if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Update node physics
-      for (const n of nodes) {
-        if (!prefersReducedMotion) {
+      // 1. Update node physics (only when animated)
+      if (!prefersReducedMotion) {
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
           n.x += n.vx;
           n.y += n.vy;
           n.pulse += n.pulseSpeed;
@@ -115,12 +118,13 @@ export default function AnimatedBackground({
             n.vy *= -1;
           }
 
-          // Gentle, organic mouse repulsion
+          // Gentle mouse repulsion
           if (mousePos) {
             const dx = n.x - mousePos.x;
             const dy = n.y - mousePos.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < mouseRadius && dist > 0) {
+            const distSq = dx * dx + dy * dy;
+            if (distSq < mouseRadius * mouseRadius && distSq > 0) {
+              const dist = Math.sqrt(distSq);
               const force = (mouseRadius - dist) / mouseRadius;
               n.x += (dx / dist) * force * 0.8;
               n.y += (dy / dist) * force * 0.8;
@@ -129,27 +133,25 @@ export default function AnimatedBackground({
         }
       }
 
-      // 2. Draw Visible yet Subtle White Constellation Lines
-      // The 1px micro-shadow creates physical separation against #F7F6F2 without harsh dark borders
+      // 2. Draw Subtle White Constellation Lines
+      ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
+      ctx.shadowBlur = 3;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 1;
+      ctx.lineWidth = 1.1;
+
       for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
         for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i];
           const b = nodes[j];
           const dx = a.x - b.x;
           const dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const distSq = dx * dx + dy * dy;
 
-          if (dist < connectDistance) {
+          if (distSq < connectDistSq) {
+            const dist = Math.sqrt(distSq);
             const norm = 1 - dist / connectDistance;
-            
-            // Soft micro-shadow gives white lines distinct edge definition against off-white
-            ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
-            ctx.shadowBlur = 3;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 1;
-
             ctx.strokeStyle = `rgba(255, 255, 255, ${norm * 0.85})`;
-            ctx.lineWidth = 1.1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -159,21 +161,20 @@ export default function AnimatedBackground({
       }
 
       // 3. Delicate White Cursor Tracer Lines
-      if (mousePos) {
-        for (const n of nodes) {
+      if (mousePos && !prefersReducedMotion) {
+        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+        ctx.shadowBlur = 4;
+        ctx.lineWidth = 1.2;
+
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
           const dx = n.x - mousePos.x;
           const dy = n.y - mousePos.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouseRadius) {
+          const distSq = dx * dx + dy * dy;
+          if (distSq < mouseRadius * mouseRadius) {
+            const dist = Math.sqrt(distSq);
             const norm = 1 - dist / mouseRadius;
-
-            ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
-            ctx.shadowBlur = 4;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 1;
-
             ctx.strokeStyle = `rgba(255, 255, 255, ${norm * 0.9})`;
-            ctx.lineWidth = 1.2;
             ctx.beginPath();
             ctx.moveTo(n.x, n.y);
             ctx.lineTo(mousePos.x, mousePos.y);
@@ -182,54 +183,97 @@ export default function AnimatedBackground({
         }
       }
 
-      // 4. Visible, Subtle White Tech Dots
-      for (const n of nodes) {
+      // 4. White Tech Dots (Solid core with micro-shadow)
+      ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+      ctx.shadowBlur = 3;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 1;
+      ctx.fillStyle = "#FFFFFF";
+
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
         const glow = (Math.sin(n.pulse) + 1) / 2;
         const currentR = n.r + glow * 0.6;
-
-        // Step A: Solid white core with micro-shadow for crisp visibility
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 3;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 1;
-
         ctx.beginPath();
         ctx.arc(n.x, n.y, currentR, 0, Math.PI * 2);
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fill();
-
-        // Step B: Soft luminous white halo without shadow for a smooth ambient glow
-        ctx.shadowColor = "transparent";
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
-
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, currentR * 1.7, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + glow * 0.25})`;
         ctx.fill();
       }
 
-      // Reset canvas shadows
+      // 5. Soft luminous white halo without shadow
       ctx.shadowColor = "transparent";
       ctx.shadowBlur = 0;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
 
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        const glow = (Math.sin(n.pulse) + 1) / 2;
+        const currentR = n.r + glow * 0.6;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, currentR * 1.7, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + glow * 0.25})`;
+        ctx.fill();
+      }
+    }
+
+    function draw() {
+      if (!isVisible || prefersReducedMotion) {
+        isRunning = false;
+        return;
+      }
+      renderFrame();
       animationFrameId = requestAnimationFrame(draw);
+    }
+
+    function startLoop() {
+      if (isRunning || prefersReducedMotion) return;
+      isRunning = true;
+      animationFrameId = requestAnimationFrame(draw);
+    }
+
+    function stopLoop() {
+      isRunning = false;
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = 0;
+      }
     }
 
     // Initial setup
     resize();
     initNodes();
-    draw();
+
+    if (prefersReducedMotion) {
+      // Draw static composition once without starting rAF loop
+      renderFrame();
+    } else {
+      startLoop();
+    }
+
+    // Visibility Observer to pause animation loop when off-screen
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    visibilityObserver.observe(container);
 
     const resizeObserver = new ResizeObserver(() => {
       resize();
+      if (prefersReducedMotion) {
+        renderFrame();
+      }
     });
     resizeObserver.observe(container);
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (prefersReducedMotion) return;
       const rect = container.getBoundingClientRect();
       const inX = e.clientX >= rect.left && e.clientX <= rect.right;
       const inY = e.clientY >= rect.top && e.clientY <= rect.bottom;
@@ -245,11 +289,14 @@ export default function AnimatedBackground({
     };
 
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    document.addEventListener("mouseleave", handleMouseLeave);
+    if (!prefersReducedMotion) {
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
+      document.addEventListener("mouseleave", handleMouseLeave);
+    }
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
+      visibilityObserver.disconnect();
       resizeObserver.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);

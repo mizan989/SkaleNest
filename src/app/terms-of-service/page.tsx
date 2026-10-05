@@ -98,20 +98,19 @@ export default function TermsOfServicePage() {
               </p>
             </section>
 
-            {/* Section 6 - Owner Confirmation Details */}
+            {/* Section 6 - Governing Law & Contact */}
             <section className="space-y-3 border-t border-[#E5E3DC] pt-6">
               <h2 className="font-display text-xl font-bold text-[#171715]">
                 6. Governing Law & Contact
               </h2>
               <p>
-                These website terms are intended to be governed in accordance with applicable laws.
+                These website terms and any non-contractual obligations arising out of or in connection with them shall be governed by and construed in accordance with the laws of India. Any disputes arising under these terms shall be resolved amicably or submitted to the jurisdiction of competent courts in India.
               </p>
               <div className="rounded-xl border border-[#E5E3DC] bg-[#F7F6F2] p-4 text-xs sm:text-sm font-mono space-y-1">
                 <p><span className="text-[#171715] font-bold">Brand:</span> SkaleNest</p>
+                <p><span className="text-[#171715] font-bold">Website:</span> https://skalenest.com</p>
                 <p><span className="text-[#171715] font-bold">Contact:</span> skalenest@gmail.com</p>
-                <p className="text-[#8C8D87] text-xs pt-2">
-                  [TODO: Owner confirmation required: Specific governing jurisdiction, dispute resolution venue, and registered business entity name.]
-                </p>
+                <p><span className="text-[#171715] font-bold">WhatsApp:</span> +91 74399 80010</p>
               </div>
             </section>
           </div>
