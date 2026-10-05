@@ -189,7 +189,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-0 lg:min-h-screen lg:min-h-[100dvh] overflow-hidden scroll-mt-20 sm:scroll-mt-24"
+      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-0 lg:min-h-screen lg:min-h-[100dvh] overflow-hidden"
     >
       {/* Animated Ambient Background */}
       <AnimatedBackground variant="contact" />

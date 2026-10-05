@@ -42,9 +42,12 @@ export default function Navbar() {
 
           for (let i = sections.length - 1; i >= 0; i--) {
             const el = document.getElementById(sections[i]);
-            if (el && el.offsetTop <= scrollPos) {
-              setActiveSection(sections[i]);
-              break;
+            if (el) {
+              const elTop = el.getBoundingClientRect().top + window.scrollY;
+              if (elTop <= scrollPos) {
+                setActiveSection(sections[i]);
+                break;
+              }
             }
           }
           ticking = false;

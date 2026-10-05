@@ -61,7 +61,7 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-28 bg-[#F7F6F2] scroll-mt-20 sm:scroll-mt-24"
+      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-28 bg-[#F7F6F2]"
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 w-full">
         {/* Section Header */}

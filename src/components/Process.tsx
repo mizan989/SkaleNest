@@ -29,7 +29,7 @@ export default function Process() {
   return (
     <section
       id="process"
-      className="relative flex flex-col justify-center border-y border-[#262624] bg-[#141412] text-[#F7F6F2] py-20 sm:py-24 lg:py-0 lg:min-h-screen lg:min-h-[100dvh] overflow-hidden scroll-mt-20 sm:scroll-mt-24"
+      className="relative flex flex-col justify-center border-y border-[#262624] bg-[#141412] text-[#F7F6F2] py-20 sm:py-24 lg:py-0 lg:min-h-screen lg:min-h-[100dvh] overflow-hidden"
     >
       {/* Subtle top & bottom gold accent hairlines */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A45C]/35 to-transparent pointer-events-none" />
