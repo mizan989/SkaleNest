@@ -56,26 +56,38 @@ body {
   color: #171715;
 }
 
-/* Refined minimalist scrollbar */
+/* Ultra-slim minimalist scrollbar (thickness reduced by 80% with signature gold accent) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 164, 92, 0.45) transparent;
+}
+
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(111, 112, 107, 0.3) transparent;
+  scrollbar-color: rgba(201, 164, 92, 0.45) transparent;
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 3px;
+  height: 3px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: rgba(111, 112, 107, 0.25);
+  background: rgba(201, 164, 92, 0.4);
   border-radius: 9999px;
   transition: background-color 0.2s ease;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 164, 92, 0.7);
+  background: #C9A45C;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #B88939;
 }
 
 /* Accessible keyboard focus states */
