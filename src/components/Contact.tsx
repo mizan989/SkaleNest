@@ -1,158 +1,33 @@
 "use client";
 
-import { useState, useEffect, useRef, FormEvent } from "react";
-import { Mail, MessageCircle, Instagram, Linkedin, CheckCircle2, ArrowRight, Loader2, AlertCircle } from "lucide-react";
-import AnimatedBackground from "./AnimatedBackground";
+import { useState, FormEvent } from "react";
+import { ArrowUpRight, Mail, MessageCircle, Instagram, Linkedin, CheckCircle2, Send, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import Reveal from "./Reveal";
+import Eyebrow from "./Eyebrow";
+import SpotlightCard from "./SpotlightCard";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnpavapk";
 
-const NEED_OPTIONS = [
-  "Website Design & Development",
-  "Digital Marketing",
-  "Both",
-  "Not Sure Yet",
-] as const;
+const CHALLENGE_OPTIONS = [
+  "Need more leads",
+  "Need better social media",
+  "Need a new website",
+  "Need more Google visibility",
+  "Need better ads",
+  "Other",
+];
 
-type NeedOption = typeof NEED_OPTIONS[number];
-type FormStatus = "idle" | "submitting" | "success" | "error";
-
-interface FormDataState {
-  name: string;
-  email: string;
-  service: string;
-  message: string;
-}
-
-interface FieldErrors {
-  name?: string;
-  email?: string;
-  service?: string;
-  message?: string;
-}
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+type Status = "idle" | "submitting" | "success" | "error";
 
 export default function Contact() {
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-
-  const [formData, setFormData] = useState<FormDataState>({
-    name: "",
-    email: "",
-    service: "",
-    message: "",
-  });
-
-  const nameInputRef = useRef<HTMLInputElement>(null);
-  const emailInputRef = useRef<HTMLInputElement>(null);
-  const serviceSelectRef = useRef<HTMLSelectElement>(null);
-  const messageInputRef = useRef<HTMLTextAreaElement>(null);
-
-  // Pre-fill service from event or URL hash if coming from Services CTA
-  useEffect(() => {
-    const handleSelectService = (e: Event) => {
-      const customEvent = e as CustomEvent<string>;
-      if (customEvent.detail && NEED_OPTIONS.includes(customEvent.detail as NeedOption)) {
-        setFormData((prev) => ({ ...prev, service: customEvent.detail }));
-        setFieldErrors((prev) => ({ ...prev, service: undefined }));
-      }
-    };
-
-    if (typeof window !== "undefined") {
-      const hash = window.location.hash;
-      if (hash.includes("service=")) {
-        const match = hash.match(/service=([^&]+)/);
-        if (match) {
-          const decoded = decodeURIComponent(match[1]);
-          if (NEED_OPTIONS.includes(decoded as NeedOption)) {
-            setFormData((prev) => ({ ...prev, service: decoded }));
-          }
-        }
-      }
-    }
-
-    window.addEventListener("skalenest:select-service", handleSelectService);
-    return () => {
-      window.removeEventListener("skalenest:select-service", handleSelectService);
-    };
-  }, []);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear validation error when user starts typing/selecting
-    if (fieldErrors[name as keyof FieldErrors]) {
-      setFieldErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
-    }
-  };
-
-  const validateForm = (): FieldErrors => {
-    const errors: FieldErrors = {};
-
-    if (!formData.name.trim()) {
-      errors.name = "Please enter your name.";
-    }
-
-    if (!formData.email.trim()) {
-      errors.email = "Please enter your email address.";
-    } else if (!EMAIL_REGEX.test(formData.email.trim())) {
-      errors.email = "Please enter a valid email address (e.g. name@company.com).";
-    }
-
-    if (!formData.service || !NEED_OPTIONS.includes(formData.service as NeedOption)) {
-      errors.service = "Please select what you need.";
-    }
-
-    if (!formData.message.trim()) {
-      errors.message = "Please provide details about your project.";
-    } else if (formData.message.trim().length < 10) {
-      errors.message = "Please provide at least 10 characters describing your project.";
-    }
-
-    return errors;
-  };
+  const [status, setStatus] = useState<Status>("idle");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    // Prevent duplicate submission while already submitting
-    if (status === "submitting") return;
-
-    // Field-level validation check
-    const errors = validateForm();
-    if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors);
-      // Focus first invalid field
-      if (errors.name) {
-        nameInputRef.current?.focus();
-      } else if (errors.email) {
-        emailInputRef.current?.focus();
-      } else if (errors.service) {
-        serviceSelectRef.current?.focus();
-      } else if (errors.message) {
-        messageInputRef.current?.focus();
-      }
-      return;
-    }
-
     setStatus("submitting");
-    setErrorMessage("");
-
-    const data = new FormData();
-    data.append("name", formData.name.trim());
-    data.append("email", formData.email.trim());
-    data.append("service", formData.service);
-    data.append("message", formData.message.trim());
-    data.append("_subject", `New SkaleNest Project Enquiry from ${formData.name.trim()}`);
+    const form = e.currentTarget;
+    const data = new FormData(form);
 
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -160,322 +35,257 @@ export default function Contact() {
         body: data,
         headers: { Accept: "application/json" },
       });
-
       if (res.ok) {
         setStatus("success");
-        setFieldErrors({});
-        setFormData({
-          name: "",
-          email: "",
-          service: "",
-          message: "",
-        });
+        form.reset();
       } else {
-        const result = await res.json().catch(() => null);
         setStatus("error");
-        setErrorMessage(
-          result?.errors?.[0]?.message ||
-            "Unable to submit enquiry at this time. Please check your details and try again."
-        );
       }
     } catch {
       setStatus("error");
-      setErrorMessage(
-        "Network connection error. Please check your internet connection or reach out via email directly."
-      );
     }
   }
 
   return (
-    <section
-      id="contact"
-      className="relative flex flex-col justify-center border-t border-[#E5E3DC] py-20 sm:py-24 lg:py-0 lg:min-h-screen lg:min-h-[100dvh] overflow-hidden"
-    >
-      {/* Animated Ambient Background */}
-      <AnimatedBackground variant="contact" />
-
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 w-full my-auto lg:py-16 relative z-10">
-        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14 xl:gap-16 items-center">
-          {/* Left Column: Context & Contact Details */}
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#E5E3DC] bg-white px-3 py-1 text-xs font-mono text-[#6F706B] shadow-soft mb-3 sm:mb-4">
-              <span>Start an Enquiry</span>
-            </div>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#171715] leading-[1.15]">
-              Let&apos;s discuss your project.
+    <section id="contact" className="relative border-b border-border bg-bg-secondary/70 py-24 sm:py-28 lg:py-36">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 items-start">
+          <Reveal>
+            <Eyebrow>Get In Touch</Eyebrow>
+            <h2 className="mt-5 text-balance font-display text-3xl font-semibold leading-tight tracking-tight text-text-primary sm:text-5xl">
+              Ready to Get More Customers?
             </h2>
-            <p className="mt-3 sm:mt-4 font-body text-sm sm:text-base text-[#6F706B] leading-relaxed">
-              Tell us about what you need. We review every enquiry personally and respond promptly with practical recommendations and clear next steps.
+            <p className="mt-5 max-w-md font-body text-base leading-relaxed text-text-secondary">
+              Tell us about your business. We&apos;ll identify the biggest opportunities and show you what we&apos;d improve with a free audit.
             </p>
 
-            {/* Verified Contact Routes */}
-            <div className="mt-6 sm:mt-8 flex flex-col gap-2.5 sm:gap-3">
+            <div className="mt-8 flex flex-col gap-3.5">
               <a
-                href="mailto:skalenest@gmail.com"
-                className="group flex items-center gap-3.5 rounded-xl border border-[#E5E3DC] bg-white p-3 sm:p-3.5 transition-all hover:border-[#C9A45C] hover:shadow-soft focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
-              >
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#F7F6F2] text-[#C9A45C] transition-colors group-hover:bg-[#C9A45C]/15">
-                  <Mail size={16} />
-                </div>
-                <div>
-                  <span className="block text-xs font-mono text-[#8C8D87]">Direct Email</span>
-                  <span className="font-body text-sm font-medium text-[#171715]">skalenest@gmail.com</span>
-                </div>
-              </a>
-
-              <a
-                href="https://wa.me/917439980010?text=Hi%20SkaleNest,%20I'd%20like%20to%20discuss%20a%20project."
+                href="https://wa.me/917439980010?text=Hi%20SkaleNest,%20I'd%20like%20to%20get%20a%20free%20growth%20audit%20for%20my%20business"
+                className="group flex items-center gap-3.5 rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.06] p-4 font-body text-sm text-text-primary transition-all hover:border-emerald-500/60 hover:bg-emerald-500/10 shadow-sm"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3.5 rounded-xl border border-[#E5E3DC] bg-white p-3 sm:p-3.5 transition-all hover:border-[#15803D]/60 hover:shadow-soft focus-visible:outline-2 focus-visible:outline-[#15803D]"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#15803D]/10 text-[#15803D] transition-colors group-hover:bg-[#15803D]/20">
-                  <MessageCircle size={16} />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 transition-transform group-hover:scale-110">
+                  <MessageCircle size={20} />
                 </div>
                 <div>
-                  <span className="block text-xs font-mono text-[#15803D]">WhatsApp Direct</span>
-                  <span className="font-body text-sm font-medium text-[#171715]">+91 74399 80010</span>
+                  <span className="font-mono text-[11px] text-emerald-400 font-semibold block">Instant Response</span>
+                  <span className="font-display font-medium">WhatsApp Us: +91 74399 80010</span>
                 </div>
               </a>
 
-              <div className="grid grid-cols-2 gap-3 mt-0.5">
-                <a
-                  href="https://instagram.com/skalenest"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2.5 rounded-xl border border-[#E5E3DC] bg-white p-2.5 sm:p-3 transition-all hover:border-[#C9A45C] hover:shadow-soft focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
-                >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F7F6F2] text-[#C9A45C]">
-                    <Instagram size={15} />
-                  </div>
-                  <span className="font-body text-xs font-medium text-[#171715]">@skalenest</span>
-                </a>
-
-                <a
-                  href="https://linkedin.com/company/skalenest"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2.5 rounded-xl border border-[#E5E3DC] bg-white p-2.5 sm:p-3 transition-all hover:border-[#C9A45C] hover:shadow-soft focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
-                >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F7F6F2] text-[#C9A45C]">
-                    <Linkedin size={15} />
-                  </div>
-                  <span className="font-body text-xs font-medium text-[#171715]">LinkedIn</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Native Formspree Form */}
-          <div className="rounded-2xl border border-[#E5E3DC] bg-white p-6 sm:p-8 lg:p-7 xl:p-8 shadow-soft">
-            {status === "success" ? (
-              <div
-                role="status"
-                aria-live="polite"
-                className="py-10 flex flex-col items-center justify-center text-center"
+              <a
+                href="mailto:skalenest@gmail.com"
+                className="group flex items-center gap-3.5 rounded-xl border border-border/70 bg-card/40 p-3.5 font-body text-sm text-text-secondary transition-all hover:border-gold/30 hover:bg-card hover:text-text-primary"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#15803D]/10 text-[#15803D] mb-5">
-                  <CheckCircle2 size={30} />
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-gold/20 bg-gold/[0.06] text-gold transition-transform group-hover:scale-110">
+                  <Mail size={16} />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#171715]">
-                  Enquiry Received
-                </h3>
-                <p className="mt-3 max-w-sm font-body text-sm text-[#6F706B] leading-relaxed">
-                  Thank you for reaching out to SkaleNest. We have received your message and will review your project requirements promptly.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setStatus("idle")}
-                  className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#E5E3DC] bg-[#F7F6F2] px-5 py-2 text-xs font-semibold text-[#171715] hover:border-[#171715] transition-colors focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
+                <span>skalenest@gmail.com</span>
+              </a>
+
+              <a
+                href="https://instagram.com/skalenest"
+                className="group flex items-center gap-3.5 rounded-xl border border-border/70 bg-card/40 p-3.5 font-body text-sm text-text-secondary transition-all hover:border-gold/30 hover:bg-card hover:text-text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-gold/20 bg-gold/[0.06] text-gold transition-transform group-hover:scale-110">
+                  <Instagram size={16} />
+                </div>
+                <span>Instagram: @skalenest</span>
+              </a>
+
+              <a
+                href="https://linkedin.com/company/skalenest"
+                className="group flex items-center gap-3.5 rounded-xl border border-border/70 bg-card/40 p-3.5 font-body text-sm text-text-secondary transition-all hover:border-gold/30 hover:bg-card hover:text-text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-gold/20 bg-gold/[0.06] text-gold transition-transform group-hover:scale-110">
+                  <Linkedin size={16} />
+                </div>
+                <span>LinkedIn: SkaleNest</span>
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <AnimatePresence mode="wait">
+              {status === "success" ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex min-h-[500px] flex-col items-center justify-center rounded-3xl border border-gold/40 bg-card p-10 text-center shadow-xl"
                 >
-                  <span>Submit another enquiry</span>
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-                {/* Spam protection honeypot */}
-                <input
-                  type="text"
-                  name="_gotcha"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  style={{ display: "none" }}
-                  aria-hidden="true"
-                />
-
-                {/* Field 1: Name */}
-                <div className="flex flex-col gap-1 sm:gap-1.5">
-                  <label
-                    htmlFor="form-name"
-                    className="font-body text-xs font-medium text-[#171715]"
-                  >
-                    Name <span className="text-[#DC2626]" aria-hidden="true">*</span>
-                  </label>
-                  <input
-                    ref={nameInputRef}
-                    id="form-name"
-                    name="name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your name"
-                    disabled={status === "submitting"}
-                    aria-invalid={!!fieldErrors.name}
-                    aria-describedby={fieldErrors.name ? "form-name-error" : undefined}
-                    className={`w-full rounded-xl border bg-[#F7F6F2]/50 px-3.5 py-2.5 sm:py-3 font-body text-sm text-[#171715] placeholder:text-[#8C8D87] outline-none transition-all focus:bg-white disabled:opacity-60 ${
-                      fieldErrors.name
-                        ? "border-[#DC2626] focus:border-[#DC2626] focus:ring-2 focus:ring-[#DC2626]/20"
-                        : "border-[#E5E3DC] focus:border-[#C9A45C] focus:ring-2 focus:ring-[#C9A45C]/20"
-                    }`}
-                  />
-                  {fieldErrors.name && (
-                    <p id="form-name-error" role="alert" className="text-xs text-[#DC2626] font-medium mt-0.5">
-                      {fieldErrors.name}
-                    </p>
-                  )}
-                </div>
-
-                {/* Field 2: Email */}
-                <div className="flex flex-col gap-1 sm:gap-1.5">
-                  <label
-                    htmlFor="form-email"
-                    className="font-body text-xs font-medium text-[#171715]"
-                  >
-                    Email <span className="text-[#DC2626]" aria-hidden="true">*</span>
-                  </label>
-                  <input
-                    ref={emailInputRef}
-                    id="form-email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="name@company.com"
-                    disabled={status === "submitting"}
-                    aria-invalid={!!fieldErrors.email}
-                    aria-describedby={fieldErrors.email ? "form-email-error" : undefined}
-                    className={`w-full rounded-xl border bg-[#F7F6F2]/50 px-3.5 py-2.5 sm:py-3 font-body text-sm text-[#171715] placeholder:text-[#8C8D87] outline-none transition-all focus:bg-white disabled:opacity-60 ${
-                      fieldErrors.email
-                        ? "border-[#DC2626] focus:border-[#DC2626] focus:ring-2 focus:ring-[#DC2626]/20"
-                        : "border-[#E5E3DC] focus:border-[#C9A45C] focus:ring-2 focus:ring-[#C9A45C]/20"
-                    }`}
-                  />
-                  {fieldErrors.email && (
-                    <p id="form-email-error" role="alert" className="text-xs text-[#DC2626] font-medium mt-0.5">
-                      {fieldErrors.email}
-                    </p>
-                  )}
-                </div>
-
-                {/* Field 3: What do you need? */}
-                <div className="flex flex-col gap-1 sm:gap-1.5">
-                  <label
-                    htmlFor="form-service"
-                    className="font-body text-xs font-medium text-[#171715]"
-                  >
-                    What do you need? <span className="text-[#DC2626]" aria-hidden="true">*</span>
-                  </label>
-                  <select
-                    ref={serviceSelectRef}
-                    id="form-service"
-                    name="service"
-                    required
-                    value={formData.service}
-                    onChange={handleChange}
-                    disabled={status === "submitting"}
-                    aria-invalid={!!fieldErrors.service}
-                    aria-describedby={fieldErrors.service ? "form-service-error" : undefined}
-                    className={`w-full rounded-xl border bg-[#F7F6F2]/50 px-3.5 py-2.5 sm:py-3 font-body text-sm text-[#171715] outline-none transition-all focus:bg-white disabled:opacity-60 cursor-pointer ${
-                      fieldErrors.service
-                        ? "border-[#DC2626] focus:border-[#DC2626] focus:ring-2 focus:ring-[#DC2626]/20"
-                        : "border-[#E5E3DC] focus:border-[#C9A45C] focus:ring-2 focus:ring-[#C9A45C]/20"
-                    }`}
-                  >
-                    <option value="" disabled>
-                      Select an option
-                    </option>
-                    {NEED_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                  {fieldErrors.service && (
-                    <p id="form-service-error" role="alert" className="text-xs text-[#DC2626] font-medium mt-0.5">
-                      {fieldErrors.service}
-                    </p>
-                  )}
-                </div>
-
-                {/* Field 4: Tell us about your project */}
-                <div className="flex flex-col gap-1 sm:gap-1.5">
-                  <label
-                    htmlFor="form-message"
-                    className="font-body text-xs font-medium text-[#171715]"
-                  >
-                    Tell us about your project <span className="text-[#DC2626]" aria-hidden="true">*</span>
-                  </label>
-                  <textarea
-                    ref={messageInputRef}
-                    id="form-message"
-                    name="message"
-                    rows={3}
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
-                    disabled={status === "submitting"}
-                    aria-invalid={!!fieldErrors.message}
-                    aria-describedby={fieldErrors.message ? "form-message-error" : undefined}
-                    placeholder="Provide a brief overview of your business, goals, and what you are looking to achieve..."
-                    className={`w-full resize-none rounded-xl border bg-[#F7F6F2]/50 px-3.5 py-2.5 sm:py-3 font-body text-sm text-[#171715] placeholder:text-[#8C8D87] outline-none transition-all focus:bg-white disabled:opacity-60 ${
-                      fieldErrors.message
-                        ? "border-[#DC2626] focus:border-[#DC2626] focus:ring-2 focus:ring-[#DC2626]/20"
-                        : "border-[#E5E3DC] focus:border-[#C9A45C] focus:ring-2 focus:ring-[#C9A45C]/20"
-                    }`}
-                  />
-                  {fieldErrors.message && (
-                    <p id="form-message-error" role="alert" className="text-xs text-[#DC2626] font-medium mt-0.5">
-                      {fieldErrors.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Global Error message */}
-                {status === "error" && (
-                  <div
-                    role="alert"
-                    className="flex items-start gap-2.5 rounded-xl border border-[#DC2626]/30 bg-[#DC2626]/5 p-3 text-xs text-[#DC2626]"
-                  >
-                    <AlertCircle size={16} className="shrink-0 mt-0.5" />
-                    <span>{errorMessage || "Submission error. Please check your details and try again."}</span>
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold">
+                    <CheckCircle2 size={32} />
                   </div>
-                )}
-
-                {/* Submit button */}
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#171715] px-7 py-3.5 font-body text-sm font-semibold text-white shadow-soft transition-all hover:bg-[#C9A45C] hover:text-[#171715] disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
+                  <h3 className="mt-6 font-display text-2xl sm:text-3xl font-semibold text-text-primary">
+                    Audit Request Received!
+                  </h3>
+                  <p className="mt-3 max-w-md font-body text-sm text-text-secondary leading-relaxed">
+                    Thank you! We are reviewing your digital presence. We will send your custom growth audit and improvement roadmap within 24 hours.
+                  </p>
+                  <a
+                    href="https://wa.me/917439980010?text=Hi%20SkaleNest,%20I%20just%20submitted%20the%20audit%20form"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-6 py-3 font-body text-sm font-semibold text-gold hover:border-gold hover:bg-gold/20 transition-all"
+                  >
+                    <span>Message Us On WhatsApp</span>
+                  </a>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                 >
-                  {status === "submitting" ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin" />
-                      <span>Sending Enquiry...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Send Enquiry</span>
-                      <ArrowRight size={16} />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
+                  <SpotlightCard className="border-border/80 bg-card p-6 sm:p-8 lg:p-10 shadow-xl rounded-3xl">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5">
+                      <input
+                        type="hidden"
+                        name="_subject"
+                        value="New SkaleNest Website Growth Audit Request"
+                      />
+
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <Field label="Full Name" name="full_name" placeholder="John Doe" required />
+                        <Field label="Business Name" name="business_name" placeholder="Acme Clinic" required />
+                      </div>
+
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <Field
+                          label="Email Address"
+                          name="email"
+                          type="email"
+                          placeholder="john@example.com"
+                          required
+                        />
+                        <Field
+                          label="Phone / WhatsApp"
+                          name="phone"
+                          type="tel"
+                          placeholder="+91 98765 43210"
+                          required
+                        />
+                      </div>
+
+                      <Field
+                        label="Business Category / Industry"
+                        name="business_type"
+                        placeholder="e.g. Restaurant, Dental Clinic, Salon, Gym"
+                        required
+                      />
+
+                      {/* Biggest Challenge Selection */}
+                      <div className="flex flex-col gap-2">
+                        <label className="font-body text-xs font-medium text-text-secondary">
+                          What&apos;s your biggest challenge? *
+                        </label>
+                        <select
+                          name="biggest_challenge"
+                          required
+                          defaultValue=""
+                          className="w-full rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary outline-none transition-all focus:border-gold focus:ring-1 focus:ring-gold/50"
+                        >
+                          <option value="" disabled className="bg-bg text-text-secondary">
+                            Select your biggest challenge
+                          </option>
+                          {CHALLENGE_OPTIONS.map((opt) => (
+                            <option key={opt} value={opt} className="bg-bg text-text-primary">
+                              {opt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="font-body text-xs font-medium text-text-secondary">
+                          Tell us about your business & goals (Optional)
+                        </label>
+                        <textarea
+                          name="goals"
+                          rows={3}
+                          placeholder="What would you like to achieve in the next 3-6 months?"
+                          className="w-full resize-none rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary outline-none transition-all focus:border-gold focus:ring-1 focus:ring-gold/50"
+                        />
+                      </div>
+
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <Field label="Website (Optional)" name="website" placeholder="https://..." required={false} />
+                        <Field label="Instagram (Optional)" name="instagram" placeholder="@handle" required={false} />
+                      </div>
+
+                      <motion.button
+                        type="submit"
+                        disabled={status === "submitting"}
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 font-body text-sm font-semibold text-bg transition-all hover:bg-gold-bright disabled:opacity-60 shadow-lg"
+                      >
+                        {status === "submitting" ? (
+                          <span>Analyzing & Submitting...</span>
+                        ) : (
+                          <>
+                            <span>Get My Free Growth Audit</span>
+                            <Send size={15} className="transition-transform group-hover:translate-x-0.5" />
+                          </>
+                        )}
+                      </motion.button>
+
+                      {status === "error" && (
+                        <p className="text-center font-body text-xs text-red-400">
+                          Something went wrong. Please try again or WhatsApp us directly.
+                        </p>
+                      )}
+                    </form>
+                  </SpotlightCard>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+function Field({
+  label,
+  name,
+  type = "text",
+  placeholder = "",
+  required,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  placeholder?: string;
+  required: boolean;
+}) {
+  return (
+    <div className="flex flex-col gap-2">
+      <label
+        htmlFor={name}
+        className="font-body text-xs font-medium text-text-secondary"
+      >
+        {label} {required && "*"}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        required={required}
+        placeholder={placeholder}
+        className="w-full rounded-xl border border-border/80 bg-bg/90 px-4 py-3 font-body text-sm text-text-primary placeholder:text-text-secondary/60 outline-none transition-all focus:border-gold focus:ring-1 focus:ring-gold/50"
+      />
+    </div>
   );
 }

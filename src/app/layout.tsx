@@ -2,28 +2,60 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const instrumentSans = localFont({
+const display = localFont({
   src: [
     {
-      path: "../../public/fonts/InstrumentSans-Regular.ttf",
-      weight: "400",
+      path: "../../public/fonts/SpaceGrotesk-Medium.woff2",
+      weight: "500",
       style: "normal",
     },
     {
-      path: "../../public/fonts/InstrumentSans-Bold.ttf",
+      path: "../../public/fonts/SpaceGrotesk-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/SpaceGrotesk-Bold.woff2",
       weight: "700",
       style: "normal",
     },
   ],
-  variable: "--font-sans",
+  variable: "--font-display",
   display: "swap",
 });
 
-const geistMono = localFont({
+const body = localFont({
   src: [
     {
-      path: "../../public/fonts/GeistMono-Regular.ttf",
+      path: "../../public/fonts/Inter-Regular.woff2",
       weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Inter-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Inter-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+  ],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const mono = localFont({
+  src: [
+    {
+      path: "../../public/fonts/JetBrainsMono-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/JetBrainsMono-Medium.woff2",
+      weight: "500",
       style: "normal",
     },
   ],
@@ -32,51 +64,31 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skalenest.vercel.app"),
-  alternates: {
-    canonical: "/",
-  },
-  title: "SkaleNest — Website Design, Development & Digital Marketing",
+  metadataBase: new URL("https://skalenest.com"),
+  title: "SkaleNest — Digital Marketing & High-Converting Website Creation",
   description:
-    "SkaleNest designs, develops, and deploys high-performance websites and creates strategic digital marketing campaigns for growing businesses.",
+    "We build high-converting websites, dominate Google Maps local SEO, produce high-retention video content, and automate WhatsApp CRM funnels for ambitious businesses.",
   keywords: [
-    "SkaleNest",
-    "website design",
-    "web development",
-    "digital marketing",
-    "frontend development",
-    "custom websites",
+    "website creation for business",
+    "custom web design agency",
+    "digital marketing agency",
+    "high-converting websites",
+    "local SEO agency",
+    "Google Business Profile optimization",
+    "WhatsApp marketing automation",
+    "short-form video production",
+    "conversion rate optimization",
   ],
   icons: {
-    icon: [
-      { url: "/logo.svg", type: "image/svg+xml" },
-      { url: "/logo1.png", type: "image/png" },
-    ],
-    shortcut: "/logo.svg",
-    apple: "/logo1.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   openGraph: {
-    title: "SkaleNest — Website Design, Development & Digital Marketing",
+    title: "SkaleNest — Digital Marketing & Website Creation for Businesses",
     description:
-      "Modern website design, full-stack development, and digital marketing solutions.",
+      "High-converting website design, local search dominance, visual content, and automated CRM growth systems.",
     type: "website",
-    url: "https://skalenest.vercel.app",
-    siteName: "SkaleNest",
-    images: [
-      {
-        url: "/logo1.png",
-        width: 1280,
-        height: 1280,
-        alt: "SkaleNest Logo",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "SkaleNest — Website Design, Development & Digital Marketing",
-    description:
-      "Modern website design, full-stack development, and digital marketing solutions.",
-    images: ["/logo1.png"],
   },
 };
 
@@ -86,11 +98,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${geistMono.variable}`}>
-      <body className="font-sans bg-[#F7F6F2] text-[#171715] antialiased selection:bg-[#C9A45C]/20 selection:text-[#171715]">
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <body className="font-body bg-bg text-text-primary antialiased">
         {children}
       </body>
     </html>
   );
 }
-

@@ -2,137 +2,141 @@
 
 import Link from "next/link";
 import Logo from "./Logo";
-import { ArrowUp, Mail, MessageCircle, Instagram, Linkedin } from "lucide-react";
+import { ArrowUp, ArrowUpRight, MapPin, MessageCircle, Mail, Instagram, Linkedin } from "lucide-react";
 import { useLenis } from "./SmoothScroll";
+
+type FooterLink = {
+  label: string;
+  href: string;
+  target?: string;
+  isExternalPage?: boolean;
+};
+
+const FOOTER_SERVICES: FooterLink[] = [
+  { label: "Websites That Convert", href: "#services" },
+  { label: "Google & Local SEO", href: "#services" },
+  { label: "Social Media & Content", href: "#services" },
+  { label: "Paid Ads", href: "#services" },
+  { label: "WhatsApp Automation", href: "#services" },
+];
+
+const FOOTER_COMPANY: FooterLink[] = [
+  { label: "About Us", href: "#about" },
+  { label: "Our Work", href: "#work" },
+  { label: "Case Studies", href: "#results" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Growth Plans", href: "#pricing" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Privacy Policy", href: "/privacy-policy", isExternalPage: true },
+  { label: "Terms & Conditions", href: "/terms-of-service", isExternalPage: true },
+];
 
 export default function Footer() {
   const { scrollTo } = useLenis();
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    scrollTo(href);
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternalPage?: boolean) => {
+    if (!isExternalPage && href.startsWith("#")) {
+      e.preventDefault();
+      scrollTo(href);
+    }
   };
 
   return (
-    <footer className="relative border-t border-[#262624] bg-[#141412] text-[#F7F6F2] py-14 sm:py-16 overflow-hidden">
-      {/* Subtle top gold accent hairline */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A45C]/35 to-transparent pointer-events-none" />
-
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid gap-10 md:grid-cols-4 lg:gap-12">
-          {/* Col 1: Brand & Tagline */}
-          <div className="md:col-span-1">
-            <Logo size={36} dark />
-            <p className="mt-4 font-body text-xs sm:text-sm text-[#9C9B94] leading-relaxed">
-              Website design, development, and digital marketing for growing businesses.
+    <footer className="relative bg-bg py-16 lg:py-20 border-t border-border/60">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
+          {/* Brand Col */}
+          <div>
+            <Logo />
+            <p className="mt-4 font-body text-sm font-medium text-text-primary">
+              Digital marketing for businesses that want more customers.
             </p>
+            <p className="mt-2 max-w-[280px] font-body text-xs leading-relaxed text-text-secondary">
+              We help local businesses get found on Google, grow on social media, and turn enquiries into paying customers.
+            </p>
+
+            {/* Location badge */}
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/60 px-3.5 py-1.5 backdrop-blur-sm">
+              <MapPin size={13} className="text-gold" />
+              <span className="font-mono text-xs text-text-secondary">
+                Kolkata, India &bull; Serving Nationwide
+              </span>
+            </div>
           </div>
 
-          {/* Col 2: Navigation */}
+          {/* Services Column */}
           <div>
-            <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#C9A45C]">
-              Navigation
-            </h3>
-            <ul className="mt-4 space-y-2.5 font-body text-sm text-[#9C9B94]">
-              <li>
-                <a
-                  href="#services"
-                  onClick={(e) => handleNavClick(e, "#services")}
-                  className="transition-colors hover:text-[#F7F6F2]"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#process"
-                  onClick={(e) => handleNavClick(e, "#process")}
-                  className="transition-colors hover:text-[#F7F6F2]"
-                >
-                  Process
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#about"
-                  onClick={(e) => handleNavClick(e, "#about")}
-                  className="transition-colors hover:text-[#F7F6F2]"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#faq"
-                  onClick={(e) => handleNavClick(e, "#faq")}
-                  className="transition-colors hover:text-[#F7F6F2]"
-                >
-                  FAQ
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  onClick={(e) => handleNavClick(e, "#contact")}
-                  className="transition-colors hover:text-[#F7F6F2]"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 3: Services */}
-          <div>
-            <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#C9A45C]">
+            <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
               Services
             </h3>
-            <ul className="mt-4 space-y-2.5 font-body text-sm text-[#9C9B94]">
-              <li>
-                <a
-                  href="#services"
-                  onClick={(e) => handleNavClick(e, "#services")}
-                  className="transition-colors hover:text-[#F7F6F2]"
-                >
-                  Website Design & Development
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#services"
-                  onClick={(e) => handleNavClick(e, "#services")}
-                  className="transition-colors hover:text-[#F7F6F2]"
-                >
-                  Digital Marketing
-                </a>
-              </li>
+            <ul className="mt-5 flex flex-col gap-3">
+              {FOOTER_SERVICES.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    onClick={(e) => handleLinkClick(e, l.href)}
+                    className="font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 4: Verified Contact */}
+          {/* Company Column */}
           <div>
-            <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#C9A45C]">
-              Direct Contact
+            <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
+              Company
             </h3>
-            <ul className="mt-4 space-y-2.5 font-body text-sm text-[#9C9B94]">
-              <li>
-                <a
-                  href="mailto:skalenest@gmail.com"
-                  className="group flex items-center gap-2 transition-colors hover:text-[#F7F6F2]"
-                >
-                  <Mail size={14} className="text-[#C9A45C] transition-transform group-hover:scale-110" />
-                  <span className="transition-colors group-hover:text-[#F7F6F2]">skalenest@gmail.com</span>
-                </a>
-              </li>
+            <ul className="mt-5 flex flex-col gap-3">
+              {FOOTER_COMPANY.map((l) => (
+                <li key={l.label}>
+                  {l.isExternalPage ? (
+                    <Link
+                      href={l.href}
+                      className="font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
+                    >
+                      {l.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={l.href}
+                      onClick={(e) => handleLinkClick(e, l.href, l.isExternalPage)}
+                      className="font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
+                    >
+                      {l.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div>
+            <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
+              Contact
+            </h3>
+            <ul className="mt-5 flex flex-col gap-3.5">
               <li>
                 <a
                   href="https://wa.me/917439980010"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 transition-colors hover:text-[#22C55E]"
+                  className="group inline-flex items-center gap-2 font-body text-sm text-text-secondary transition-colors hover:text-emerald-400"
                 >
-                  <MessageCircle size={14} className="text-[#22C55E] transition-transform group-hover:scale-110" />
-                  <span className="transition-colors group-hover:text-[#22C55E]">WhatsApp (+91 74399 80010)</span>
+                  <MessageCircle size={15} className="text-emerald-400 shrink-0" />
+                  <span>WhatsApp: +91 74399 80010</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:skalenest@gmail.com"
+                  className="group inline-flex items-center gap-2 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
+                >
+                  <Mail size={15} className="text-gold shrink-0" />
+                  <span>skalenest@gmail.com</span>
                 </a>
               </li>
               <li>
@@ -140,10 +144,10 @@ export default function Footer() {
                   href="https://instagram.com/skalenest"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 transition-colors hover:text-[#F7F6F2]"
+                  className="group inline-flex items-center gap-2 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
                 >
-                  <Instagram size={14} className="text-[#C9A45C] transition-transform group-hover:scale-110" />
-                  <span className="transition-colors group-hover:text-[#F7F6F2]">@skalenest</span>
+                  <Instagram size={15} className="text-pink-400 shrink-0" />
+                  <span>Instagram: @skalenest</span>
                 </a>
               </li>
               <li>
@@ -151,10 +155,10 @@ export default function Footer() {
                   href="https://linkedin.com/company/skalenest"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 transition-colors hover:text-[#F7F6F2]"
+                  className="group inline-flex items-center gap-2 font-body text-sm text-text-secondary transition-colors hover:text-text-primary"
                 >
-                  <Linkedin size={14} className="text-[#C9A45C] transition-transform group-hover:scale-110" />
-                  <span className="transition-colors group-hover:text-[#F7F6F2]">LinkedIn</span>
+                  <Linkedin size={15} className="text-blue-400 shrink-0" />
+                  <span>LinkedIn: SkaleNest</span>
                 </a>
               </li>
             </ul>
@@ -162,32 +166,28 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col gap-4 border-t border-[#262624] pt-8 sm:flex-row sm:items-center sm:justify-between font-body text-xs text-[#7A7973]">
-          <div className="flex flex-wrap items-center gap-4">
+        <div className="mt-16 flex flex-col gap-4 border-t border-border/60 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-body text-text-secondary">
             <span>&copy; {new Date().getFullYear()} SkaleNest. All rights reserved.</span>
             <span>&bull;</span>
-            <Link
-              href="/privacy-policy"
-              className="hover:text-[#F7F6F2] transition-colors underline-offset-4 hover:underline"
-            >
+            <Link href="/privacy-policy" className="hover:text-gold transition-colors">
               Privacy Policy
             </Link>
             <span>&bull;</span>
-            <Link
-              href="/terms-of-service"
-              className="hover:text-[#F7F6F2] transition-colors underline-offset-4 hover:underline"
-            >
+            <Link href="/terms-of-service" className="hover:text-gold transition-colors">
               Terms & Conditions
             </Link>
           </div>
 
           <button
-            type="button"
             onClick={() => scrollTo(0)}
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-[#9C9B94] hover:text-[#C9A45C] transition-colors self-start sm:self-auto focus-visible:outline-2 focus-visible:outline-[#C9A45C]"
+            className="group flex items-center gap-2 font-mono text-xs text-text-secondary transition-colors hover:text-gold"
+            aria-label="Scroll back to top"
           >
             <span>Back to top</span>
-            <ArrowUp size={13} />
+            <div className="flex h-6 w-6 items-center justify-center rounded-full border border-border/80 bg-card text-text-secondary transition-transform group-hover:-translate-y-0.5 group-hover:border-gold/40 group-hover:text-gold">
+              <ArrowUp size={12} />
+            </div>
           </button>
         </div>
       </div>

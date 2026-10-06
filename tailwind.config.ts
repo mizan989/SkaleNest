@@ -8,43 +8,57 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: {
-          DEFAULT: "#F7F6F2",
-          surface: "#FFFFFF",
-          subtle: "#F0EFEA",
-        },
-        surface: "#FFFFFF",
-        card: "#FFFFFF",
+        bg: "#070B14",
+        "bg-secondary": "#0D1422",
+        card: "#111A2A",
         text: {
-          primary: "#171715",
-          secondary: "#6F706B",
-          muted: "#8C8D87",
+          primary: "#F8FAFC",
+          secondary: "#CBD5E1",
         },
         gold: {
           DEFAULT: "#C9A45C",
-          hover: "#B88939",
-          dim: "rgba(201, 164, 92, 0.10)",
-          bright: "#D4AB59",
-          border: "rgba(201, 164, 92, 0.35)",
+          dim: "rgba(201, 164, 92, 0.15)",
+          bright: "#E4C083",
         },
         border: {
-          DEFAULT: "#E5E3DC",
-          subtle: "#ECEAE4",
-          strong: "#D4D2C9",
+          DEFAULT: "#202B3D",
         },
-        error: "#DC2626",
-        success: "#15803D",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
-        display: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
-        body: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        display: ["var(--font-display)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
-      boxShadow: {
-        soft: "0 2px 10px rgba(23, 23, 21, 0.04), 0 1px 3px rgba(23, 23, 21, 0.03)",
-        card: "0 10px 30px -5px rgba(23, 23, 21, 0.05), 0 4px 6px -2px rgba(23, 23, 21, 0.02)",
-        lifted: "0 16px 36px -8px rgba(23, 23, 21, 0.08), 0 6px 12px -3px rgba(23, 23, 21, 0.03)",
+      backgroundImage: {
+        "radial-fade":
+          "radial-gradient(circle at center, rgba(201,164,92,0.08) 0%, rgba(7,11,20,0) 70%)",
+        "grid-pattern":
+          "linear-gradient(rgba(32,43,61,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(32,43,61,0.4) 1px, transparent 1px)",
+      },
+      backgroundSize: {
+        grid: "48px 48px",
+      },
+      animation: {
+        "fade-up": "fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "pulse-slow": "pulseSlow 4s ease-in-out infinite",
+        drift: "drift 20s ease-in-out infinite",
+      },
+      keyframes: {
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(24px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        pulseSlow: {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "1" },
+        },
+        drift: {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "50%": { transform: "translate(20px, -15px)" },
+        },
+      },
+      letterSpacing: {
+        widest2: "0.25em",
       },
     },
   },
